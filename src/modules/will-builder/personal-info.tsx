@@ -33,7 +33,7 @@ export const PersonalInfo = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          Let's Start with Your Personal Information
+          Lets Start with Your Personal Information
         </motion.h3>
         <motion.p
           className="text-slate-600"

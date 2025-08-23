@@ -14,7 +14,7 @@ export const Cta = () => {
 
             <div className="container mx-auto px-4 text-center relative z-10 max-w-4xl">
                 <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Secure Your Family's Future?</h2>
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Secure Your Familys Future?</h2>
                     <p className="text-xl mb-10 opacity-90 max-w-3xl mx-auto leading-relaxed">
                         Join thousands of families who have already protected their legacy with our professional will creation platform.
                     </p>
