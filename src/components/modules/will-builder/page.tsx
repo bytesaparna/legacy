@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { MagneticButton } from "@/components/magnetic-button"
 import { useWillDataStore } from "@/zustand/will-data"
-import { WillBuilderHeader } from "@/modules/will-builder/header"
+import { WillBuilderHeader } from "@/components/modules/will-builder/header"
 import { renderStepContent, steps } from "@/utils/will-builder"
 import { ProgressBar } from "./progress-bar"
 

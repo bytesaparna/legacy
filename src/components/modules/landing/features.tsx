@@ -213,7 +213,7 @@ export default function Features() {
                   <h3 className="text-2xl leading-none font-semibold tracking-tight">Monthly Wellness Check</h3>
                   <div className="text-md text-muted-foreground flex flex-col gap-2 text-sm">
                     <p className="max-w-[460px]">
-                      Automated monthly emails to verify your status. Update your will anytime or confirm you're okay with a simple reply
+                      Automated monthly emails to verify your status. Update your will anytime or confirm you are okay with a simple reply
                     </p>
                   </div>
                 </div>

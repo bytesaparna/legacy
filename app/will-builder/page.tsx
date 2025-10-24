@@ -1,4 +1,4 @@
-import { WillBuilderPage } from "@/modules/will-builder/page";
+import { WillBuilderPage } from "@/components/modules/will-builder/page";
 
 export default function WillBuilder() {
   return (

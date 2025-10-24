@@ -1,4 +1,4 @@
-import { AssetsPage } from "@/modules/assets/page"
+import { AssetsPage } from "@/components/modules/assets/page"
 
 export default function Assets() {
   return (

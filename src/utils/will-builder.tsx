@@ -1,11 +1,11 @@
 import { FileText, Heart, Home, Shield, User, Users } from "lucide-react";
-import { PersonalInfo } from "@/modules/will-builder/personal-info"
-import { Assets } from "@/modules/will-builder/assets"
-import { Executor } from "@/modules/will-builder/executor"
-import { Instructions } from "@/modules/will-builder/instructions"
-import { Review } from "@/modules/will-builder/review"
+import { PersonalInfo } from "@/components/modules/will-builder/personal-info"
+import { Assets } from "@/components/modules/will-builder/assets"
+import { Executor } from "@/components/modules/will-builder/executor"
+import { Instructions } from "@/components/modules/will-builder/instructions"
+import { Review } from "@/components/modules/will-builder/review"
 import { motion } from "framer-motion"
-import { Beneficiaries } from "@/modules/will-builder/beneficiaries";
+import { Beneficiaries } from "@/components/modules/will-builder/beneficiaries";
 
 
 export const steps = [

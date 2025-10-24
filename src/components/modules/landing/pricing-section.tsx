@@ -183,7 +183,7 @@ export function PricingSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-16"
         >
-          <p className="text-white/60 mb-4">Need a custom solution? We're here to help.</p>
+          <p className="text-white/60 mb-4">Need a custom solution? We are here to help.</p>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
