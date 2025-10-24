@@ -1,28 +1,28 @@
-import { Award, FileText, Shield, Users } from "lucide-react";
+import { Award, FileText, Shield, Users, Mail, Bell } from "lucide-react";
 
 export const features = [
     {
       icon: FileText,
       title: "Smart Will Builder",
-      description: "Step-by-step guidance to create your legally compliant will",
+      description: "Create your comprehensive digital will with assets, beneficiaries, and automated distribution",
       color: "text-blue-400",
     },
     {
-      icon: Users,
-      title: "Beneficiary Management",
-      description: "Easily manage and organize your beneficiaries and their allocations",
+      icon: Mail,
+      title: "Monthly Wellness Check",
+      description: "Automated monthly emails to verify your status. Update your will anytime or confirm you're okay with a simple reply",
       color: "text-green-400",
     },
     {
-      icon: Shield,
-      title: "Asset Protection",
-      description: "Comprehensive asset tracking and protection strategies",
+      icon: Bell,
+      title: "Automated Distribution",
+      description: "If no response is received, the system automatically notifies all beneficiaries with collection instructions and asset details",
       color: "text-purple-400",
     },
     {
-      icon: Award,
-      title: "Legal Compliance",
-      description: "Ensure your will meets all legal requirements in your jurisdiction",
+      icon: Shield,
+      title: "Secure Storage",
+      description: "Blockchain-backed secure storage for all your will documents, asset records, and beneficiary information",
       color: "text-amber-400",
     },
   ]
