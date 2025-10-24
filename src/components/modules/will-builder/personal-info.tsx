@@ -11,6 +11,7 @@ import { motion } from "framer-motion"
 export const PersonalInfo = () => {
   const { updateWillData, willData } = useWillDataStore()
   console.log(willData, "Data after Personal Info")
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -19,14 +20,6 @@ export const PersonalInfo = () => {
       className="space-y-6"
     >
       <div className="text-center mb-8 text-black">
-        <motion.img
-          src="/placeholder-f33rj.png"
-          alt="Personal information form"
-          className="mx-auto rounded-lg shadow-lg mb-4"
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-          whileHover={{ scale: 1.05, rotateY: 5 }}
-        />
         <motion.h3
           className="text-2xl font-bold mb-2"
           initial={{ opacity: 0, y: 20 }}
@@ -85,7 +78,8 @@ export const PersonalInfo = () => {
                     }
                   })
                 }
-                className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg"
+                required
+                className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20"
               />
             ) : field.type === "select" ? (
               <Select
@@ -96,11 +90,11 @@ export const PersonalInfo = () => {
                       ...willData.personalInfo,
                       maritalStatus: value
                     }
-
                   })
                 }
+                required
               >
-                <SelectTrigger className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg">
+                <SelectTrigger className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20">
                   <SelectValue placeholder="Select marital status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -133,7 +127,8 @@ export const PersonalInfo = () => {
                     }
                   })
                 }}
-                className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg"
+                required={field.id !== "occupation"}
+                className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20"
               />
             )}
           </motion.div>

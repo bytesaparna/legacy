@@ -14,12 +14,6 @@ export default function Home() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
     useEffect(() => {
-        const root = window.document.documentElement
-        root.classList.remove("light", "system")
-        root.classList.add("dark")
-    }, [])
-
-    useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 100)
         }
@@ -27,7 +21,6 @@ export default function Home() {
         window.addEventListener("scroll", handleScroll)
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
-
 
 
     return (

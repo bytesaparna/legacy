@@ -8,6 +8,9 @@ import { Providers } from "./providers"
 export const metadata: Metadata = {
   title: "Legacy",
   description: "Create Your Legacy",
+  icons:{
+    icon : "/legacy-logo.png"
+  }
 }
 
 export default function RootLayout({

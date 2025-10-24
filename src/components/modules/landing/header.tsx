@@ -1,8 +1,9 @@
 'use client'
 import Link from "next/link"
-import { useState } from "react"
-import { isInitialized } from "@/lib/nexus"
 import ConnectButton from "../connect-button/button"
+import { usePathname, useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import path from "path"
 
 interface HeaderProps {
     isScrolled: boolean
@@ -10,13 +11,14 @@ interface HeaderProps {
     setIsMobileMenuOpen: (isMobileMenuOpen: boolean) => void
 }
 
-const btn =
-    'px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 ' +
-    'disabled:opacity-50 disabled:cursor-not-allowed';
-
 export const Header = ({ isScrolled, isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
-    const [initialized, setInitialized] = useState(isInitialized());
-    const [balances, setBalances] = useState<any>(null);
+    const [isHomePage, setIsHomePage] = useState(true)
+    const pathname = usePathname()
+
+    useEffect(() => {
+        pathname === "/will-builder" ? setIsHomePage(false) : setIsHomePage(true)
+    }, [pathname])
+
     const handleMobileNavClick = (elementId: string) => {
         setIsMobileMenuOpen(false)
         setTimeout(() => {
@@ -34,11 +36,6 @@ export const Header = ({ isScrolled, isMobileMenuOpen, setIsMobileMenuOpen }: He
         }, 100)
     }
 
-    const handleConnectWallet = () => {
-        console.log("connect")
-    }
-
-
     return (
         <>
             <header
@@ -54,93 +51,109 @@ export const Header = ({ isScrolled, isMobileMenuOpen, setIsMobileMenuOpen }: He
                 <Link
                     className={`z-50 flex items-center justify-center gap-2 transition-all duration-300 flex-shrink-0 ${isScrolled ? "ml-2" : ""
                         }`}
-                    href="https://v0.app"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="/"
                 >
-                    <img src="/pen.webp" width={40} height={40} className="rounded-full"></img>
+                    <img src="/legacy-logo.png" width={40} height={40} className="rounded-full"></img>
                 </Link>
 
-                <div className="absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-1 text-sm font-medium text-muted-foreground transition duration-200 hover:text-foreground md:flex">
-                    <a
-                        className="relative px-3 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                        onClick={(e) => {
-                            e.preventDefault()
-                            const element = document.getElementById("features")
-                            if (element) {
-                                const headerOffset = 120 // Account for sticky header height + margin
-                                const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-                                const offsetPosition = elementPosition - headerOffset
+                {isHomePage ?
 
-                                window.scrollTo({
-                                    top: offsetPosition,
-                                    behavior: "smooth",
-                                })
-                            }
-                        }}
-                    >
-                        <span className="relative z-20">Features</span>
-                    </a>
-                    <a
-                        className="relative px-3 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                        onClick={(e) => {
-                            e.preventDefault()
-                            const element = document.getElementById("pricing")
-                            if (element) {
-                                const headerOffset = 120 // Account for sticky header height + margin
-                                const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-                                const offsetPosition = elementPosition - headerOffset
+                    <div className="absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-1 text-sm font-medium text-muted-foreground transition duration-200 hover:text-foreground md:flex">
+                        <a
+                            className="relative px-3 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                const element = document.getElementById("features")
+                                if (element) {
+                                    const headerOffset = 120 // Account for sticky header height + margin
+                                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+                                    const offsetPosition = elementPosition - headerOffset
 
-                                window.scrollTo({
-                                    top: offsetPosition,
-                                    behavior: "smooth",
-                                })
-                            }
-                        }}
-                        href="#pricing"
-                    >
-                        <span className="relative z-20">Pricing</span>
-                    </a>
-                    <a
-                        className="relative px-3 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                        onClick={(e) => {
-                            e.preventDefault()
-                            const element = document.getElementById("testimonials")
-                            if (element) {
-                                const headerOffset = 120 // Account for sticky header height + margin
-                                const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-                                const offsetPosition = elementPosition - headerOffset
+                                    window.scrollTo({
+                                        top: offsetPosition,
+                                        behavior: "smooth",
+                                    })
+                                }
+                            }}
+                        >
+                            <span className="relative z-20">Features</span>
+                        </a>
+                        {/* <a
+                            className="relative px-3 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                const element = document.getElementById("pricing")
+                                if (element) {
+                                    const headerOffset = 120 // Account for sticky header height + margin
+                                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+                                    const offsetPosition = elementPosition - headerOffset
 
-                                window.scrollTo({
-                                    top: offsetPosition,
-                                    behavior: "smooth",
-                                })
-                            }
-                        }}
-                    >
-                        <span className="relative z-20">Testimonials</span>
-                    </a>
-                    <a
-                        className="relative px-3 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                        onClick={(e) => {
-                            e.preventDefault()
-                            const element = document.getElementById("faq")
-                            if (element) {
-                                const headerOffset = 120 // Account for sticky header height + margin
-                                const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-                                const offsetPosition = elementPosition - headerOffset
+                                    window.scrollTo({
+                                        top: offsetPosition,
+                                        behavior: "smooth",
+                                    })
+                                }
+                            }}
+                            href="#pricing"
+                        >
+                            <span className="relative z-20">Pricing</span>
+                        </a> */}
+                        <Link
+                            className="relative px-3 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                            href="/will-builder"
+                        >
+                            <span className="relative z-20">Will builder</span>
+                        </Link>
+                        <a
+                            className="relative px-3 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                const element = document.getElementById("testimonials")
+                                if (element) {
+                                    const headerOffset = 120 // Account for sticky header height + margin
+                                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+                                    const offsetPosition = elementPosition - headerOffset
 
-                                window.scrollTo({
-                                    top: offsetPosition,
-                                    behavior: "smooth",
-                                })
-                            }
-                        }}
-                    >
-                        <span className="relative z-20">FAQ</span>
-                    </a>
+                                    window.scrollTo({
+                                        top: offsetPosition,
+                                        behavior: "smooth",
+                                    })
+                                }
+                            }}
+                        >
+                            <span className="relative z-20">Testimonials</span>
+                        </a>
+                        {/* <a
+                            className="relative px-3 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                const element = document.getElementById("faq")
+                                if (element) {
+                                    const headerOffset = 120 // Account for sticky header height + margin
+                                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+                                    const offsetPosition = elementPosition - headerOffset
 
-                </div>
+                                    window.scrollTo({
+                                        top: offsetPosition,
+                                        behavior: "smooth",
+                                    })
+                                }
+                            }}
+                        >
+                            <span className="relative z-20">FAQ</span>
+                        </a> */}
+
+                    </div> :
+
+                    <div className="absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-1 text-sm font-medium text-muted-foreground transition duration-200 hover:text-foreground md:flex">
+                        <Link
+                            className="relative px-3 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                            href="/"
+                        >
+                            <span className="relative z-20">Back to home</span>
+                        </Link>
+                    </div>
+                }
                 <div className="relative flex-shrink-0 z-50 ml-10">
                     <ConnectButton />
                 </div>
@@ -188,44 +201,54 @@ export const Header = ({ isScrolled, isMobileMenuOpen, setIsMobileMenuOpen }: He
             </header>
 
             {/* Mobile Menu Overlay */}
-            {
+            {isMobileMenuOpen && (
                 isMobileMenuOpen && (
                     <div className="fixed inset-0 z-[9998] bg-black/50 backdrop-blur-sm md:hidden">
                         <div className="absolute top-20 left-4 right-4 bg-background/95 backdrop-blur-md border border-border/50 rounded-2xl shadow-2xl p-6">
-                            <nav className="flex flex-col space-y-4">
-                                <button
-                                    onClick={() => handleMobileNavClick("features")}
-                                    className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
-                                >
-                                    Features
-                                </button>
-                                <button
+                            {isHomePage ?
+                                <nav className="flex flex-col space-y-4">
+
+                                    <button
+                                        onClick={() => handleMobileNavClick("features")}
+                                        className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
+                                    >
+                                        Features
+                                    </button>
+                                    {/* <button
                                     onClick={() => handleMobileNavClick("pricing")}
                                     className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
                                 >
                                     Pricing
-                                </button>
-                                <button
-                                    onClick={() => handleMobileNavClick("testimonials")}
-                                    className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
-                                >
-                                    Testimonials
-                                </button>
-                                <button
-                                    onClick={() => handleMobileNavClick("faq")}
-                                    className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
-                                >
-                                    FAQ
-                                </button>
-                            </nav>
+                                </button> */}
+                                    <button
+                                        onClick={() => handleMobileNavClick("testimonials")}
+                                        className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
+                                    >
+                                        Testimonials
+                                    </button>
+                                    {/* <button
+                                        onClick={() => handleMobileNavClick("faq")}
+                                        className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
+                                    >
+                                        FAQ
+                                    </button> */}
+                                </nav>
+                                :
+                                <nav className="flex flex-col space-y-4">
+                                    <div>
+                                        <Link href="/" className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50">
+                                            Back to home
+                                        </Link>
+                                    </div>
+                                </nav>
+                            }
                             <div className="relative flex-shrink-0 z-50 ml-10">
                                 <ConnectButton />
                             </div>
                         </div>
                     </div>
-                )
+                ))
             }
-
         </>
     )
 }

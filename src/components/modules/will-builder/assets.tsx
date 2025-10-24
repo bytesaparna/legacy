@@ -9,7 +9,6 @@ import { useWillDataStore } from "@/zustand/will-data"
 import { motion } from "framer-motion"
 import { Home } from "lucide-react"
 import Link from "next/link"
-import { useState } from "react"
 
 export const Assets = () => {
   const { updateWillData, willData } = useWillDataStore()
@@ -25,56 +24,6 @@ export const Assets = () => {
     console.log(willData, "Will data after assets UPDATE")
   }
 
-
-
-
-  const [newAsset, setNewAsset] = useState({
-    id: "",
-    type: "",
-    category: "",
-    name: "",
-    description: "",
-    value: 0,
-    location: "",
-    beneficiary: "",
-    documents: [],
-    notes: "",
-  })
-
-  const addAsset = () => {
-    if (newAsset.name && newAsset.value) {
-      const asset = {
-        id: Date.now().toString(),
-        type: newAsset.type || "",
-        category: newAsset.category || "",
-        name: newAsset.name,
-        description: newAsset.description || "",
-        value: newAsset.value.toString(),
-        location: newAsset.location || "",
-        beneficiary: newAsset.beneficiary || "",
-        documents: newAsset.documents || [],
-        notes: newAsset.notes || "",
-      }
-      updateWillData({
-        ...willData,
-        assets: [...willData.assets, asset]
-      })
-
-      setNewAsset({
-        id: "",
-        type: "",
-        category: "",
-        name: "",
-        description: "",
-        value: 0,
-        location: "",
-        beneficiary: "",
-        documents: [],
-        notes: "",
-      })
-    }
-  }
-
   const removeAsset = (index: number) => {
     const newAssets = willData.assets.filter((_, i) => i !== index)
 
@@ -85,6 +34,26 @@ export const Assets = () => {
     console.log(willData, "Will data after assets REMOVAL")
   }
 
+  const addAssetBar = () => {
+    const newEmptyAsset = {
+      id: Date.now().toString(),
+      type: "",
+      category: "",
+      name: "",
+      description: "",
+      value: "",
+      location: "",
+      beneficiary: "",
+      documents: [],
+      notes: "",
+    }
+
+    updateWillData({
+      ...willData,
+      assets: [...willData.assets, newEmptyAsset]
+    })
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -93,14 +62,6 @@ export const Assets = () => {
       className="space-y-6"
     >
       <div className="text-center mb-8 text-black">
-        <motion.img
-          src="/graduation-assets.png"
-          alt="Assets and property"
-          className="mx-auto rounded-lg shadow-lg mb-4"
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-          whileHover={{ scale: 1.05, rotateY: 5 }}
-        />
         <motion.h3
           className="text-2xl font-bold mb-2"
           initial={{ opacity: 0, y: 20 }}
@@ -153,7 +114,7 @@ export const Assets = () => {
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
           >
-            <Card className="p-4">
+            <Card className="p-4 bg-primary/20 text-black ">
               <div className="grid md:grid-cols-4 gap-4">
                 <motion.div
                   className="space-y-2"
@@ -166,12 +127,12 @@ export const Assets = () => {
                 >
                   <Label>Asset Type</Label>
                   <Select
-                    value={asset.type}
+                    value={asset.type || undefined}
                     onValueChange={(value) => {
                       updateAsset(index, "type", value)
                     }}
                   >
-                    <SelectTrigger className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg">
+                    <SelectTrigger className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -200,7 +161,26 @@ export const Assets = () => {
                     onChange={(e) => {
                       updateAsset(index, "description", e.target.value)
                     }}
-                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg"
+                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20"
+                  />
+                </motion.div>
+                <motion.div
+                  className="space-y-2"
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Label>Location</Label>
+                  <Input
+                    placeholder="Location of the asset"
+                    value={asset.location}
+                    onChange={(e) => {
+                      updateAsset(index, "location", e.target.value)
+                    }}
+                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20"
                   />
                 </motion.div>
                 <motion.div
@@ -219,26 +199,7 @@ export const Assets = () => {
                     onChange={(e) => {
                       updateAsset(index, "value", e.target.value)
                     }}
-                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg"
-                  />
-                </motion.div>
-                <motion.div
-                  className="space-y-2"
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Label>Beneficiary</Label>
-                  <Input
-                    placeholder="Who inherits this"
-                    value={asset.beneficiary}
-                    onChange={(e) => {
-                      updateAsset(index, "beneficiary", e.target.value)
-                    }}
-                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg"
+                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20" 
                   />
                 </motion.div>
               </div>
@@ -257,16 +218,18 @@ export const Assets = () => {
         ))}
 
         <motion.div
-          className="mt-4"
+          className="mt-4 text-black"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2 }}
         >
-          <Button variant="outline" className="w-full bg-transparent" onClick={addAsset}>
+          <Button variant="outline" className="w-full "
+            onClick={addAssetBar}
+          >
             Add Another Asset
           </Button>
         </motion.div>
       </motion.div>
-    </motion.div>
+    </motion.div >
   )
 }

@@ -11,7 +11,7 @@ export const ProgressBar = () => {
 
     return (
         <motion.div
-            className="mb-8"
+            className="mb-8  mt-10"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -22,8 +22,8 @@ export const ProgressBar = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
             >
-                <h1 className="text-3xl font-bold text-yellow-700">Will Builder</h1>
-                <Badge className="bg-yellow-100 text-yellow-700">
+                <h1 className="text-3xl font-bold text-primary">Legacy Builder</h1>
+                <Badge className="bg-yellow-100 text-primary">
                     Step {step} of {maximumStep}
                 </Badge>
             </motion.div>
@@ -36,15 +36,8 @@ export const ProgressBar = () => {
             >
                 <Progress value={progress} className="h-3 bg-slate-200 overflow-hidden rounded-full" />
                 <motion.div
-                    className="absolute top-0 left-0 h-3 bg-gradient-to-r from-yellow-500 to-yellow-900 rounded-full shadow-lg"
+                    className="absolute top-0 left-0 h-3 rounded-full"
                     style={{ width: `${progress}%` }}
-                    animate={{
-                        boxShadow: [
-                            "0 0 10px rgba(59, 130, 246, 0.5)",
-                            "0 0 20px rgba(59, 130, 246, 0.8)",
-                            "0 0 10px rgba(59, 130, 246, 0.5)",
-                        ],
-                    }}
                     transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
                 />
             </motion.div>
@@ -69,7 +62,7 @@ export const ProgressBar = () => {
                     <motion.div
                         key={stepItem.id}
                         className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm cursor-pointer ${stepItem.id === step
-                            ? "bg-yellow-700 text-white"
+                            ? "bg-primary text-white"
                             : stepItem.id < step
                                 ? "bg-green-100 text-green-700"
                                 : "bg-slate-100 text-slate-600"

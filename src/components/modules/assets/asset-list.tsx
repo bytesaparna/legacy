@@ -7,11 +7,12 @@ import { assetCategories, Assets } from "@/utils/assets"
 import { useWillDataStore, WillData } from "@/zustand/will-data"
 import { motion } from "framer-motion"
 import { Edit, Trash2 } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export const AssetLists = () => {
     const { willData, updateWillData } = useWillDataStore()
     const [selectedCategory, setSelectedCategory] = useState("all")
+    const [isScrolled, setIsScrolled] = useState(false)
     const filteredAssets =
         selectedCategory === "all" ? willData.assets : willData.assets.filter((asset) => asset.category === selectedCategory)
 
@@ -22,6 +23,17 @@ export const AssetLists = () => {
             assets: newAssets
         })
     }
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 100)
+        }
+
+        window.addEventListener("scroll", handleScroll)
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
+
+
 
     return (
         <div className="grid gap-4">
@@ -59,10 +71,6 @@ export const AssetLists = () => {
                                                 <div>
                                                     <p className="text-slate-500">Location</p>
                                                     <p className="font-medium">{asset.location}</p>
-                                                </div>
-                                                <div>
-                                                    <p className="text-slate-500">Beneficiary</p>
-                                                    <p className="font-medium">{asset.beneficiary}</p>
                                                 </div>
                                                 <div>
                                                     <p className="text-slate-500">Documents</p>

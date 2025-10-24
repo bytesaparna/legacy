@@ -8,7 +8,7 @@ export const Instructions = () => {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -20 }}
-        className="space-y-6"
+        className="space-y-6 text-black"
     >
         <div className="text-center mb-8">
             <motion.h3

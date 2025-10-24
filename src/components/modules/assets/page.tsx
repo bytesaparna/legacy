@@ -2,9 +2,8 @@
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { assetCategories, Assets } from "@/utils/assets"
-import { Award, BarChart3, Calculator, Car, DollarSign, Download, Edit, FileText, Home, PieChart, Plus, Shield, Trash2, TrendingUp, Upload } from "lucide-react"
-import Link from "next/link"
+import { assetCategories } from "@/utils/assets"
+import { BarChart3, Calculator, Car, Download, Edit, FileText, Home, PieChart, Plus, Trash2, TrendingUp, Upload } from "lucide-react"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -14,12 +13,14 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { WillBuilderHeader } from "../will-builder/header"
 import { ValueCard } from "./value-card"
 import { useWillDataStore, WillData } from "@/zustand/will-data"
 import { AssetsOverview } from "./assets-overview"
+import { Header } from "../landing/header"
 
 export const AssetsPage = () => {
+    const [isScrolled, setIsScrolled] = useState(false)
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const { willData, updateWillData } = useWillDataStore()
     const [selectedCategory, setSelectedCategory] = useState("all")
     const [isAddingAsset, setIsAddingAsset] = useState(false)
@@ -95,7 +96,7 @@ export const AssetsPage = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
             {/* Header */}
-            <WillBuilderHeader />
+            <Header isScrolled={isScrolled} isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} />
 
             <div className="container mx-auto px-4 py-8">
                 {/* Page Header */}
@@ -306,10 +307,6 @@ export const AssetsPage = () => {
                                                                 <div>
                                                                     <p className="text-slate-500">Location</p>
                                                                     <p className="font-medium">{asset.location}</p>
-                                                                </div>
-                                                                <div>
-                                                                    <p className="text-slate-500">Beneficiary</p>
-                                                                    <p className="font-medium">{asset.beneficiary}</p>
                                                                 </div>
                                                                 <div>
                                                                     <p className="text-slate-500">Documents</p>

@@ -126,7 +126,7 @@ export default function Features() {
                           <div className="text-sm font-semibold text-gray-900 dark:text-white">Assets</div>
                           <div className="text-xs text-gray-600 dark:text-gray-300">Digital & Physical</div>
                         </motion.div>
-                        
+
                         <motion.div
                           className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg p-4 shadow-lg"
                           initial={{ opacity: 1, y: 20 }}
@@ -137,7 +137,7 @@ export default function Features() {
                           <div className="text-sm font-semibold text-gray-900 dark:text-white">Nominees</div>
                           <div className="text-xs text-gray-600 dark:text-gray-300">Beneficiaries</div>
                         </motion.div>
-                        
+
                         <motion.div
                           className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg p-4 shadow-lg"
                           initial={{ opacity: 1, y: 20 }}
@@ -148,7 +148,7 @@ export default function Features() {
                           <div className="text-sm font-semibold text-gray-900 dark:text-white">Auto Check</div>
                           <div className="text-xs text-gray-600 dark:text-gray-300">Monthly Updates</div>
                         </motion.div>
-                        
+
                         <motion.div
                           className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg p-4 shadow-lg"
                           initial={{ opacity: 1, y: 20 }}
@@ -232,17 +232,6 @@ export default function Features() {
                       />
                     </span>
                   </h1>
-                  <div className="absolute top-64 z-10 flex items-center justify-center">
-                    <div className="w-[400px] h-[400px]">
-                      <Suspense
-                        fallback={
-                          <div className="bg-secondary/20 h-[400px] w-[400px] animate-pulse rounded-full"></div>
-                        }
-                      >
-                        {/* <Earth baseColor={baseColor} markerColor={[0, 0, 0]} glowColor={glowColor} dark={dark} /> */}
-                      </Suspense>
-                    </div>
-                  </div>
                   <div className="absolute top-1/2 w-full translate-y-20 scale-x-[1.2] opacity-70 transition-all duration-1000 group-hover:translate-y-8 group-hover:opacity-100">
                     <div className="from-primary/50 to-primary/0 absolute left-1/2 h-[256px] w-[60%] -translate-x-1/2 scale-[2.5] rounded-[50%] bg-radial from-10% to-60% opacity-20 sm:h-[512px] dark:opacity-100"></div>
                     <div className="from-primary/30 to-primary/0 absolute left-1/2 h-[128px] w-[40%] -translate-x-1/2 scale-200 rounded-[50%] bg-radial from-10% to-60% opacity-20 sm:h-[256px] dark:opacity-100"></div>

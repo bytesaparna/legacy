@@ -5,18 +5,33 @@ import { Card, CardContent } from "@/components/ui/card"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { MagneticButton } from "@/components/magnetic-button"
 import { useWillDataStore } from "@/zustand/will-data"
-import { WillBuilderHeader } from "@/components/modules/will-builder/header"
+import { Header } from "@/components/modules/landing/header"
 import { renderStepContent, steps } from "@/utils/will-builder"
 import { ProgressBar } from "./progress-bar"
+import { useEffect, useState } from "react"
+import { api } from "@/trpc/trpc"
 
 
 export const WillBuilderPage = () => {
     const { step, setStep, maximumStep, willData } = useWillDataStore()
+    const [isScrolled, setIsScrolled] = useState(false)
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 100)
+        }
+
+        window.addEventListener("scroll", handleScroll)
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+        <div className="min-h-screen bg-background">
+
             {/* Header */}
-            <WillBuilderHeader />
+            <Header isScrolled={isScrolled} isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} />
             <div className="container mx-auto px-4 py-8">
 
                 {/* Progress Header */}
@@ -24,7 +39,7 @@ export const WillBuilderPage = () => {
 
                 {/* Main Content */}
                 <motion.div layout className="max-w-4xl mx-auto">
-                    <Card className="overflow-hidden shadow-xl border-0 bg-white/90 backdrop-blur-sm">
+                    <Card className="overflow-hidden shadow-xl border border-border/50 backdrop-blur-sm bg-slate-200">
                         <CardContent className="p-8">
                             <AnimatePresence mode="wait">{renderStepContent(step)}</AnimatePresence>
                         </CardContent>
@@ -42,7 +57,7 @@ export const WillBuilderPage = () => {
                         variant="outline"
                         onClick={() => setStep(step - 1)}
                         disabled={step === 1}
-                        className="flex items-center gap-2 bg-white/80 backdrop-blur-sm disabled:opacity-50 text-black"
+                        className="flex items-center gap-2 bg-background/80 backdrop-blur-sm border-border/50 disabled:opacity-50 text-foreground hover:bg-background/90"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         Previous
@@ -55,7 +70,8 @@ export const WillBuilderPage = () => {
                         }
                         }
                         disabled={step === maximumStep}
-                        className="flex items-center gap-2  bg-yellow-700 text-white shadow-lg"
+                        className="flex items-center gap-2 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                        style={{ backgroundColor: "#e78a53", color: "#121113" }}
                     >
                         Next
                         <motion.div animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}>

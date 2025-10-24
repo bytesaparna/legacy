@@ -6,6 +6,7 @@ import { WagmiProvider } from 'wagmi';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { config } from '@/lib/wagmi';
 import '@rainbow-me/rainbowkit/styles.css';
+import TRPCProvider from '@/trpc/react';
 
 export function Providers({ children }: { children: React.ReactNode }) {
     const [queryClient] = useState(() => new QueryClient({
@@ -20,7 +21,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <WagmiProvider config={config}>
             <QueryClientProvider client={queryClient}>
                 <RainbowKitProvider modalSize="compact" coolMode>
-                    {children}
+                    <TRPCProvider>
+                        {children}
+                    </TRPCProvider>
                 </RainbowKitProvider>
             </QueryClientProvider>
         </WagmiProvider>
