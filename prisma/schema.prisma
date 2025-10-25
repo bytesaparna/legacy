@@ -48,9 +48,9 @@ model Will {
   updatedAt DateTime @updatedAt
 
   // Relations
-  assets        Asset[]
-  beneficiaries Beneficiary[]
-  guardians     Guardian[]
+  assets         Asset[]
+  onChainAssets  OnChainAsset[]
+  guardians      Guardian[]
 
   @@index([userId])
   @@index([status])
@@ -70,6 +70,9 @@ model Asset {
   notes       String?
   documents   String[] // Array of document URLs/paths
 
+  // Relations
+  beneficiaries Beneficiary[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -77,18 +80,59 @@ model Asset {
 }
 
 model Beneficiary {
-  id     String @id @default(cuid())
-  willId String
-  will   Will   @relation(fields: [willId], references: [id], onDelete: Cascade)
+  id      String @id @default(cuid())
+  assetId String
+  asset   Asset  @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   name         String
   relationship String
   share        String // Percentage or description of share
+  walletAddress String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([assetId])
+}
+
+model OnChainAsset {
+  id     String @id @default(cuid())
+  willId String
+  will   Will   @relation(fields: [willId], references: [id], onDelete: Cascade)
+
+  assetType       String // crypto, nft, token
+  blockchain      String // ethereum, polygon, solana, etc.
+  contractAddress String?
+  tokenId         String?
+  tokenSymbol     String?
+  walletAddress   String
+  estimatedValue  Float
+  description     String
+  notes           String?
+
+  // Relations
+  beneficiaries OnChainBeneficiary[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([willId])
+}
+
+model OnChainBeneficiary {
+  id            String       @id @default(cuid())
+  onChainAssetId String
+  onChainAsset  OnChainAsset @relation(fields: [onChainAssetId], references: [id], onDelete: Cascade)
+
+  name           String
+  relationship   String
+  share          String // Percentage or description of share
+  walletAddress  String // Beneficiary's wallet address
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([onChainAssetId])
 }
 
 model Guardian {

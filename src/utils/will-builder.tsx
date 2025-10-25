@@ -1,17 +1,17 @@
-import { FileText, Heart, Home, Shield, User, Users } from "lucide-react";
+import { FileText, Heart, Home, Shield, User, Coins } from "lucide-react";
 import { PersonalInfo } from "@/components/modules/will-builder/personal-info"
 import { Assets } from "@/components/modules/will-builder/assets"
+import { OnChainAssets } from "@/components/modules/will-builder/onchain-assets"
 import { Executor } from "@/components/modules/will-builder/executor"
 import { Instructions } from "@/components/modules/will-builder/instructions"
 import { Review } from "@/components/modules/will-builder/review"
 import { motion } from "framer-motion"
-import { Beneficiaries } from "@/components/modules/will-builder/beneficiaries";
 
 
 export const steps = [
     { id: 1, title: "Personal Information", icon: User, description: "Basic details about you" },
-    { id: 2, title: "Assets & Property", icon: Home, description: "Your valuable possessions" },
-    { id: 3, title: "Beneficiaries", icon: Users, description: "Who inherits your assets" },
+    { id: 2, title: "Assets & Beneficiaries", icon: Home, description: "Your valuable possessions" },
+    { id: 3, title: "On-Chain Assets & Crypto", icon: Coins, description: "Blockchain & cryptocurrency assets" },
     { id: 4, title: "Executor & Guardians", icon: Shield, description: "Who manages your will" },
     { id: 5, title: "Special Instructions", icon: Heart, description: "Personal wishes and notes" },
     { id: 6, title: "Review & Generate", icon: FileText, description: "Finalize your will" },
@@ -39,7 +39,7 @@ export const renderStepContent = (step: number) => {
         case 2:
             return (<Assets />)
         case 3:
-            return (<Beneficiaries />)
+            return (<OnChainAssets />)
         case 4:
             return (<Executor />)
         case 5:

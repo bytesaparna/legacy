@@ -21,14 +21,36 @@ export const WillDataSchema = z.object({
             notes: z.string(),
             category: z.string(),
             name: z.string(),
+            beneficiaries: z.array(
+                z.object({
+                    name: z.string(),
+                    relationship: z.string(),
+                    share: z.string(),
+                    walletAddress: z.string(),
+                })
+            ),
         })
     ),
-
-    beneficiaries: z.array(
+    onChainAssets: z.array(
         z.object({
-            name: z.string(),
-            relationship: z.string(),
-            share: z.string(),
+            id: z.string(),
+            assetType: z.string(), // crypto, nft, token
+            blockchain: z.string(),
+            contractAddress: z.string(),
+            tokenId: z.string(),
+            tokenSymbol: z.string(),
+            walletAddress: z.string(),
+            estimatedValue: z.number(),
+            description: z.string(),
+            notes: z.string(),
+            beneficiaries: z.array(
+                z.object({
+                    name: z.string(),
+                    relationship: z.string(),
+                    share: z.string(),
+                    walletAddress: z.string(),
+                })
+            ),
         })
     ),
     executor: z.object({
@@ -72,19 +94,12 @@ export const useWillDataStore = create<WillDataStore>((set) => ({
             name: "",
             description: "",
             value: 0,
-            purchaseDate: "",
             location: "",
-            beneficiary: "",
-            documents: [""],
+            documents: [],
             notes: "",
-            relationship: "",
+            beneficiaries: [],
         }],
-        beneficiaries: [{
-            name: "",
-            relationship: "",
-            share: "",
-        },
-        ],
+        onChainAssets: [],
         executor: { name: "", relationship: "", address: "" },
         guardians: [{
             name: "",
@@ -110,7 +125,7 @@ export const useWillDataStore = create<WillDataStore>((set) => ({
                     occupation: "",
                 },
                 assets: [],
-                beneficiaries: [],
+                onChainAssets: [],
                 executor: { name: "", relationship: "", address: "" },
                 guardians: [],
                 specialInstructions: "",
@@ -118,7 +133,7 @@ export const useWillDataStore = create<WillDataStore>((set) => ({
             step: 1
         }),
     step: 1,
-    maximumStep: 8,
+    maximumStep: 6,
     setStep: (step: number) => {
         set(() => ({
             step

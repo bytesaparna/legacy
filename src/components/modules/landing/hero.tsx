@@ -1,5 +1,6 @@
 "use client"
 
+import { ConnectWalletModal } from "@/components/connect-wallet-modal"
 import { RegistrationPopup } from "@/components/registration"
 import { Button } from "@/components/ui/button"
 import { api } from "@/trpc/trpc"
@@ -9,25 +10,53 @@ import { useState, useEffect } from "react"
 import { useAccount } from "wagmi"
 
 export default function Hero() {
-    const { address } = useAccount()
+    const { address, isConnected } = useAccount()
     const router = useRouter()
     const [mounted, setMounted] = useState(false)
     const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false)
+    const [connectWalletModalOpen, setConnectWalletModalOpen] = useState(false)
 
-    const { data: isRegisteredUser, refetch } = api.user.getUser.useQuery({ walletAddress: address ?? "" })
+    const { data: isRegisteredUser, refetch, isLoading } = api.user.getUser.useQuery(
+        { walletAddress: address ?? "" },
+        { enabled: !!address && isConnected }
+    )
 
     useEffect(() => {
         setMounted(true)
     }, [])
+
+    // Watch for wallet connection changes
+    useEffect(() => {
+        if (mounted && isConnected && address) {
+            // Close connect wallet modal when wallet connects
+            setConnectWalletModalOpen(false)
+            
+            // Check if user is registered after wallet is connected
+            if (!isLoading) {
+                if (!isRegisteredUser) {
+                    // User not registered - show registration popup
+                    setIsRegistrationPopupOpen(true)
+                } else {
+                    // User is registered - navigate to will-builder
+                    router.push('/will-builder')
+                }
+            }
+        }
+    }, [mounted, isConnected, address, isRegisteredUser, isLoading, router])
 
     if (!mounted) {
         return null
     }
 
     const handleGetStarted = () => {
-        if (isRegisteredUser) {
+        if (!isConnected) {
+            // Show connect wallet modal if not connected
+            setConnectWalletModalOpen(true)
+        } else if (isRegisteredUser) {
+            // If already connected and registered, go to will-builder
             router.push('/will-builder')
-        } else {
+        } else if (!isLoading) {
+            // If connected but not registered, show registration popup
             setIsRegistrationPopupOpen(true)
         }
     }
@@ -163,7 +192,8 @@ export default function Hero() {
                     </motion.div>
                 </div>
             </section>
-            {isRegistrationPopupOpen && <RegistrationPopup isRegistrationPopupOpen={isRegistrationPopupOpen} setIsRegistrationPopupOpen={setIsRegistrationPopupOpen} onRegistrationSuccess={handleRegistrationSuccess} />}
+            {connectWalletModalOpen && <ConnectWalletModal isOpen={connectWalletModalOpen} setIsOpen={setConnectWalletModalOpen} />}
+            {isRegistrationPopupOpen && isConnected && <RegistrationPopup isRegistrationPopupOpen={isRegistrationPopupOpen} setIsRegistrationPopupOpen={setIsRegistrationPopupOpen} onRegistrationSuccess={handleRegistrationSuccess} />}
         </>
     )
 }

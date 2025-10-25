@@ -1,8 +1,6 @@
 "use client"
 
-import { useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
-
 
 
 interface LastWillProps {
@@ -24,15 +22,32 @@ interface LastWillProps {
     value: number,
     purchaseDate?: string,
     location: string,
-    beneficiary?: string,
+    beneficiaries?: {
+      name: string,
+      relationship: string,
+      share: string,
+    }[],
     documents: string[],
     notes: string,
     relationship?: string,
   }[],
-  beneficiaries: {
-    name: string,
-    relationship: string,
-    share: string,
+  onChainAssets: {
+    id: string,
+    assetType: string,
+    blockchain: string,
+    contractAddress: string,
+    tokenId: string,
+    tokenSymbol: string,
+    walletAddress: string,
+    estimatedValue: number,
+    description: string,
+    notes: string,
+    beneficiaries: {
+      name: string,
+      relationship: string,
+      share: string,
+      walletAddress: string,
+    }[],
   }[],
   executor: { name: string, relationship: string, address: string },
   guardians: {
@@ -71,7 +86,7 @@ function LastWillAndTestament({
   executor,
   guardians,
   specialInstructions,
-  beneficiaries,
+  onChainAssets,
   location = "State of [Location]",
   backgroundColor = "#F5E6D3",
   stampColor = "#DC143C"
@@ -133,19 +148,31 @@ function LastWillAndTestament({
                 <p><span className="font-semibold">Location:</span> {location}</p>
               </div>
 
-              {/* Beneficiaries */}
-              <div className="mb-10">
-                <h2 className="text-2xl font-bold mb-4 border-b-2 border-yellow-700 pb-2">Beneficiaries</h2>
-                <div className="space-y-4">
-                  {beneficiaries.map((b, i) => (
-                    <div key={i} className="ml-4 pb-3 border-b border-yellow-200">
-                      <p className="font-semibold">{i + 1}. {b.name}</p>
-                      <p className="text-sm ml-4"><strong>Relationship:</strong> {b.relationship}</p>
-                      <p className="text-sm ml-4"><strong>Bequest:</strong> {b.share}</p>
-                    </div>
-                  ))}
+              {/* On-Chain Assets */}
+              {onChainAssets.length > 0 && (
+                <div className="mb-10">
+                  <h2 className="text-2xl font-bold mb-4 border-b-2 border-yellow-700 pb-2">On-Chain Assets & Cryptocurrency</h2>
+                  <div className="space-y-4">
+                    {onChainAssets.map((asset, i) => (
+                      <div key={i} className="ml-4 pb-3 border-b border-yellow-200">
+                        <p className="font-semibold">{i + 1}. {asset.description}</p>
+                        <p className="text-sm ml-4"><strong>Type:</strong> {asset.assetType}</p>
+                        <p className="text-sm ml-4"><strong>Blockchain:</strong> {asset.blockchain}</p>
+                        <p className="text-sm ml-4"><strong>Wallet Address:</strong> {asset.walletAddress}</p>
+                        <p className="text-sm ml-4"><strong>Estimated Value:</strong> ${asset.estimatedValue}</p>
+                        {asset.beneficiaries.length > 0 && (
+                          <div className="ml-4 mt-2">
+                            <p className="text-sm font-semibold">Beneficiaries:</p>
+                            {asset.beneficiaries.map((b, bIdx) => (
+                              <p key={bIdx} className="text-xs ml-4">• {b.name} ({b.relationship}) - {b.share} - Wallet: {b.walletAddress}</p>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Executor */}
               <div className="mb-10">

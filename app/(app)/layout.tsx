@@ -11,9 +11,8 @@ import { useRouter } from "next/navigation"
 
 export default function AppSectionLayout({ children }: { children: ReactNode }) {
     const { address, isConnected } = useAccount()
-    const [mounted, setMounted] = useState(false)
     const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false)
-    const [isOpen, setIsOpen] = useState(false)
+    const [isConnectWalletOpen, setConnectWalletOpen] = useState(false)
     const router = useRouter()
 
     // Query user registration status
@@ -22,40 +21,33 @@ export default function AppSectionLayout({ children }: { children: ReactNode }) 
         { enabled: !!address && isConnected }
     )
 
-    useEffect(() => {
-        setMounted(true)
-    }, [])
 
     useEffect(() => {
         if (!isConnected) {
-            setIsOpen(true)
+            setConnectWalletOpen(true)
         } else {
-            setIsOpen(false)
+            setConnectWalletOpen(false)
         }
         // If wallet is connected but user is not registered, show registration popup
-        if (mounted && isConnected && address && !isLoading && !user) {
+        if (isConnected && address && !isLoading && !user) {
             setIsRegistrationPopupOpen(true)
         } else {
             setIsRegistrationPopupOpen(false)
         }
-    }, [mounted, isConnected, address, user, isLoading])
+    }, [user, address])
 
     const handleCloseModal = () => {
-        setIsOpen(false)
+        setConnectWalletOpen(false)
         // Only redirect if wallet is not connected
         if (!isConnected) {
             router.push('/')
         }
     }
 
-    if (!mounted) {
-        return null
-    }
-
     // If wallet is not connected, show connect wallet overlay
-    if (isOpen) {
+    if (isConnectWalletOpen) {
         return (
-            <ConnectWalletModal isOpen={isOpen} setIsOpen={handleCloseModal} />
+            <ConnectWalletModal isOpen={isConnectWalletOpen} setIsOpen={handleCloseModal} />
         )
     }
 

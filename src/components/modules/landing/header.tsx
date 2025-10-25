@@ -4,6 +4,8 @@ import ConnectButton from "../connect-button/button"
 import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import path from "path"
+import { api } from "@/trpc/trpc"
+import { useAccount } from "wagmi"
 
 interface HeaderProps {
     isScrolled: boolean
@@ -14,6 +16,8 @@ interface HeaderProps {
 export const Header = ({ isScrolled, isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
     const [isHomePage, setIsHomePage] = useState(true)
     const pathname = usePathname()
+    const { address } = useAccount()
+    const { data: userdata } = api.user.getUser.useQuery({ walletAddress: address ?? "" })
 
     useEffect(() => {
         pathname === "/will-builder" ? setIsHomePage(false) : setIsHomePage(true)
@@ -54,6 +58,7 @@ export const Header = ({ isScrolled, isMobileMenuOpen, setIsMobileMenuOpen }: He
                     href="/"
                 >
                     <img src="/legacy-logo.png" width={40} height={40} className="rounded-full"></img>
+                    <p className="text-sm font-medium text-muted-foreground">{userdata?.name ?? "Guest"}</p>
                 </Link>
 
                 {isHomePage ?

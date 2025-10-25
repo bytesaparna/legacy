@@ -56,7 +56,7 @@ export const PersonalInfo = () => {
         {personalData.map((field) => (
           <motion.div
             key={field.id}
-            className={`space-y-2 text-black ${field.colSpan ? "md:col-span-2" : ""}`}
+            className={`space-y-4 text-black ${field.colSpan ? "md:col-span-2" : ""}`}
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0 },

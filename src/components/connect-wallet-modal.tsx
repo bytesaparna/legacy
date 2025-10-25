@@ -3,6 +3,8 @@ import { Button } from "./ui/button"
 import { Wallet, X } from "lucide-react"
 import { Card } from "./ui/card"
 import ConnectWalletButton from "./modules/connect-button/button"
+import { useAccount } from "wagmi"
+import { useEffect } from "react"
 
 interface ConnectWalletModalProps {
     isOpen: boolean
@@ -10,6 +12,14 @@ interface ConnectWalletModalProps {
 }
 
 export const ConnectWalletModal = ({ isOpen, setIsOpen }: ConnectWalletModalProps) => {
+    const { isConnected } = useAccount()
+
+    // Auto-close modal when wallet connects
+    useEffect(() => {
+        if (isConnected) {
+            setIsOpen(false)
+        }
+    }, [isConnected, setIsOpen])
 
     return (
         <div>

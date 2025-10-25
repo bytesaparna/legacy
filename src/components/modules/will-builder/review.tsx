@@ -9,7 +9,7 @@ import { CheckCircle, FileText } from "lucide-react"
 import { useState } from "react"
 
 export const Review = () => {
-    const { updateWillData, willData, step, setStep, maximumStep } = useWillDataStore()
+    const { willData } = useWillDataStore()
     const [openWillDocument, setOpenWillDocument] = useState(false)
 
     return (
@@ -74,19 +74,7 @@ export const Review = () => {
                             transition={{ duration: 0.2 }}
                         >
                             <h4 className="font-semibold">Assets Listed:</h4>
-                            <p>{willData.assets.length} assets</p>
-                        </motion.div>
-                        <motion.div
-                            className="space-y-2"
-                            variants={{
-                                hidden: { opacity: 0, y: 20 },
-                                visible: { opacity: 1, y: 0 },
-                            }}
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ duration: 0.2 }}
-                        >
-                            <h4 className="font-semibold">Beneficiaries:</h4>
-                            <p>{willData.beneficiaries.length} beneficiaries</p>
+                            <p>{willData.assets.length} traditional assets, {willData.onChainAssets.length} on-chain assets</p>
                         </motion.div>
                     </CardContent>
                 </Card>
@@ -108,7 +96,7 @@ export const Review = () => {
                 </Button>
             </motion.div>
 
-            {openWillDocument && <LastWillDialog personalInfo={willData.personalInfo} assets={willData.assets} beneficiaries={willData.beneficiaries} executor={willData.executor} guardians={willData.guardians} specialInstructions={willData.specialInstructions ?? ""}  open={openWillDocument} setOpen={setOpenWillDocument}/>}
+            {openWillDocument && <LastWillDialog personalInfo={willData.personalInfo} assets={willData.assets} onChainAssets={willData.onChainAssets} executor={willData.executor} guardians={willData.guardians} specialInstructions={willData.specialInstructions ?? ""} open={openWillDocument} setOpen={setOpenWillDocument} />}
         </motion.div>
     )
 }
