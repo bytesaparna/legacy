@@ -8,14 +8,14 @@ export const WillDataSchema = z.object({
         dateOfBirth: z.string().min(1, "Date of birth is required"),
         address: z.string().min(1, "Address is required"),
         maritalStatus: z.string().min(1, "Marital status is required"),
-        occupation: z.string().optional(),
+        occupation: z.string(),
     }),
     assets: z.array(
         z.object({
             id: z.string(),
             type: z.string(),
             description: z.string(),
-            value: z.string().or(z.number()).optional(),
+            value: z.number(),
             location: z.string(),
             documents: z.array(z.string()),
             notes: z.string(),
@@ -27,19 +27,19 @@ export const WillDataSchema = z.object({
     beneficiaries: z.array(
         z.object({
             name: z.string(),
-            relationship: z.string().optional(),
-            share: z.string().or(z.number()).optional(),
+            relationship: z.string(),
+            share: z.string(),
         })
     ),
     executor: z.object({
         name: z.string(),
-        relationship: z.string().optional(),
-        address: z.string().optional(),
+        relationship: z.string(),
+        address: z.string(),
     }),
     guardians: z.array(
         z.object({
             name: z.string(),
-            relationship: z.string().optional(),
+            relationship: z.string(),
         })
     ),
     specialInstructions: z.string().optional(),
@@ -79,9 +79,17 @@ export const useWillDataStore = create<WillDataStore>((set) => ({
             notes: "",
             relationship: "",
         }],
-        beneficiaries: [],
+        beneficiaries: [{
+            name: "",
+            relationship: "",
+            share: "",
+        },
+        ],
         executor: { name: "", relationship: "", address: "" },
-        guardians: [],
+        guardians: [{
+            name: "",
+            relationship: "",
+        }],
         specialInstructions: "",
     },
     updateWillData: (data) =>

@@ -1,12 +1,16 @@
 'use client'
+import LastWillDialog from "@/components/complete-will"
+import LastWillAndTestament from "@/components/complete-will"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useWillDataStore } from "@/zustand/will-data"
 import { motion } from "framer-motion"
 import { CheckCircle, FileText } from "lucide-react"
+import { useState } from "react"
 
 export const Review = () => {
     const { updateWillData, willData, step, setStep, maximumStep } = useWillDataStore()
+    const [openWillDocument, setOpenWillDocument] = useState(false)
 
     return (
         <motion.div
@@ -94,7 +98,8 @@ export const Review = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
             >
-                <Button className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700">
+                <Button className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
+                    onClick={() => setOpenWillDocument(true)}>
                     <FileText className="w-4 h-4 mr-2" />
                     Generate Will Document
                 </Button>
@@ -102,6 +107,8 @@ export const Review = () => {
                     Save as Draft
                 </Button>
             </motion.div>
+
+            {openWillDocument && <LastWillDialog personalInfo={willData.personalInfo} assets={willData.assets} beneficiaries={willData.beneficiaries} executor={willData.executor} guardians={willData.guardians} specialInstructions={willData.specialInstructions ?? ""}  open={openWillDocument} setOpen={setOpenWillDocument}/>}
         </motion.div>
     )
 }

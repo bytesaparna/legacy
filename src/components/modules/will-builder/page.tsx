@@ -9,7 +9,6 @@ import { Header } from "@/components/modules/landing/header"
 import { renderStepContent, steps } from "@/utils/will-builder"
 import { ProgressBar } from "./progress-bar"
 import { useEffect, useState } from "react"
-import { api } from "@/trpc/trpc"
 
 
 export const WillBuilderPage = () => {
