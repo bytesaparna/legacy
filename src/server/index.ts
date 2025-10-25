@@ -1,8 +1,8 @@
-import { personalDataRouter } from "./personal-data/router";
 import { router } from "./trpc";
+import { userRouter } from "./user/route";
 
 export const appRouter = router({
-    personalData: personalDataRouter
+    user: userRouter,
 });
 
 export type AppRouter = typeof appRouter;

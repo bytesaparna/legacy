@@ -15,7 +15,6 @@
   "dependencies": {
     "@andromedaprotocol/andromeda.js": "^2.0.0",
     "@avail-project/nexus-core": "^0.0.1",
-    "@clerk/nextjs": "^6.34.0",
     "@epic-web/cachified": "^5.5.1",
     "@prisma/client": "^6.18.0",
     "@radix-ui/react-avatar": "^1.1.10",

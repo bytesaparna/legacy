@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  walletAddress String   @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  wills Will[]
+
+  @@index([walletAddress])
+}
+
+model Will {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Personal Information
+  fullName      String
+  dateOfBirth   String
+  address       String
+  maritalStatus String
+  occupation    String?
+
+  // Executor Information
+  executorName         String
+  executorRelationship String
+  executorAddress      String
+
+  // Special Instructions
+  specialInstructions String?
+
+  // Status and metadata
+  status    String   @default("draft") // draft, completed, published
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  assets        Asset[]
+  beneficiaries Beneficiary[]
+  guardians     Guardian[]
+
+  @@index([userId])
+  @@index([status])
+}
+
+model Asset {
+  id     String @id @default(cuid())
+  willId String
+  will   Will   @relation(fields: [willId], references: [id], onDelete: Cascade)
+
+  type        String
+  category    String
+  name        String
+  description String
+  value       Float
+  location    String
+  notes       String?
+  documents   String[] // Array of document URLs/paths
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([willId])
+}
+
+model Beneficiary {
+  id     String @id @default(cuid())
+  willId String
+  will   Will   @relation(fields: [willId], references: [id], onDelete: Cascade)
+
+  name         String
+  relationship String
+  share        String // Percentage or description of share
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([willId])
+}
+
+model Guardian {
+  id     String @id @default(cuid())
+  willId String
+  will   Will   @relation(fields: [willId], references: [id], onDelete: Cascade)
+
+  name         String
+  relationship String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([willId])
+}
