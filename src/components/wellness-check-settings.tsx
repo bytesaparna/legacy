@@ -154,11 +154,11 @@ export const WellnessCheckSettings = () => {
                         <ul className="space-y-2 text-sm text-orange-800">
                             <li className="flex items-start gap-2">
                                 <span className="text-orange-600 mt-0.5">•</span>
-                                <span>You'll receive a friendly email every 30 days</span>
+                                    <span>You will receive a friendly email every 30 days</span>
                             </li>
                             <li className="flex items-start gap-2">
                                 <span className="text-orange-600 mt-0.5">•</span>
-                                <span>We'll check if you need to update any information</span>
+                                <span>We will check if you need to update any information</span>
                             </li>
                             <li className="flex items-start gap-2">
                                 <span className="text-orange-600 mt-0.5">•</span>
