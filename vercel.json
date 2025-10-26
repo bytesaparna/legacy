@@ -1,9 +1,0 @@
-{
-  "crons": [
-    {
-      "path": "/api/cron/wellness-check",
-      "schedule": "0 9 * * *"
-    }
-  ]
-}
-

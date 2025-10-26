@@ -83,17 +83,6 @@ export const willRouter = router({
                 }
             }
 
-            // Update user's last wellness check date (requires DB migration first)
-            // Run add_wellness_check_columns.sql in your database before using this
-            try {
-                await (prisma.user.update as any)({
-                    where: { id: user.id },
-                    data: { lastWellnessCheck: new Date() }
-                });
-            } catch (error) {
-                console.log('Wellness check update skipped - run migration first');
-            }
-
             // Create the will with all related data
             const will = await (prisma.will.create as any)({
                 data: {

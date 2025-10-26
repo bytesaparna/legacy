@@ -34,54 +34,5 @@ export const userRouter = router({
                 }
             })
             return user
-        }),
-
-    updateWellnessCheckPreference: publicProcedure
-        .input(z.object({ 
-            userId: z.string(),
-            enabled: z.boolean()
-        }))
-        .mutation(async ({ input, ctx }) => {
-            const user = await ctx.prisma.user.update({
-                where: { id: input.userId },
-                data: { wellnessCheckEnabled: input.enabled }
-            })
-            return { 
-                success: true, 
-                wellnessCheckEnabled: user.wellnessCheckEnabled 
-            }
-        }),
-
-    getWellnessCheckStatus: publicProcedure
-        .input(z.object({ userId: z.string() }))
-        .query(async ({ input, ctx }) => {
-            const user = await ctx.prisma.user.findUnique({
-                where: { id: input.userId },
-                select: {
-                    lastWellnessCheck: true,
-                    wellnessCheckEnabled: true
-                }
-            })
-            
-            if (!user) {
-                return null;
-            }
-
-            const now = new Date();
-            const lastCheck = user.lastWellnessCheck;
-            let daysUntilNextCheck = 30;
-
-            if (lastCheck) {
-                const daysSinceCheck = Math.floor(
-                    (now.getTime() - lastCheck.getTime()) / (1000 * 60 * 60 * 24)
-                );
-                daysUntilNextCheck = Math.max(0, 30 - daysSinceCheck);
-            }
-
-            return {
-                lastWellnessCheck: user.lastWellnessCheck,
-                wellnessCheckEnabled: user.wellnessCheckEnabled,
-                daysUntilNextCheck
-            }
         })
 });
