@@ -3,56 +3,56 @@ import { Marquee } from "@/components/ui/marquee"
 const testimonials = [
   {
     name: "Arjun Mehta",
-    username: "@arjdev",
-    body: "v0 has completely changed the way I build UIs. Generate, copy-paste, done. No more design stress.",
+    username: "@arjun_crypto",
+    body: "Finally, a will platform that understands crypto! Added my ETH and NFT collection in minutes. My family won't lose my digital assets now.",
     img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
   },
   {
     name: "Sara Lin",
-    username: "@sara.codes",
-    body: "Honestly shocked at how smooth the v0 generated components are out of the box. Just works perfectly.",
+    username: "@saraonchain",
+    body: "Legacy made estate planning actually easy. Connected my wallet, added my assets, done. The peace of mind is incredible.",
     img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face",
   },
   {
     name: "Devon Carter",
-    username: "@devninja",
-    body: "Our team launched a client site in 2 days using v0 components. Saved so much development time.",
+    username: "@devoncarter",
+    body: "As a Bitcoin holder since 2015, I've been worried about what happens to my crypto. Legacy solved this problem perfectly.",
     img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
   },
   {
     name: "Priya Shah",
-    username: "@priyacodes",
-    body: "Generated a few components in v0 and everything blended perfectly with our codebase. Massive W.",
+    username: "@priyabuilds",
+    body: "Love that I can include both my house AND my NFT portfolio in one will. Traditional lawyers don't get Web3, Legacy does.",
     img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
   },
   {
     name: "Leo Martin",
-    username: "@leobuilds",
-    body: "Found a beautiful hero section in v0, tweaked the prompt, and shipped in 15 minutes. Game changer.",
+    username: "@leohodls",
+    body: "The wallet-based authentication is genius. No password to remember, just connect and manage my digital legacy. Brilliant.",
     img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
   },
   {
     name: "Chloe Winters",
-    username: "@chloewinters",
-    body: "v0 helped us prototype multiple landing pages without writing CSS once. Pure magic.",
+    username: "@chloeweb3",
+    body: "Every crypto holder needs this. Spent years worrying about my family accessing my wallets. Legacy gave me the solution.",
     img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face",
   },
   {
     name: "Ayaan Malik",
-    username: "@ayaan_dev",
-    body: "As a solo founder, v0 lets me move fast without sacrificing design quality. Essential tool.",
+    username: "@ayaan_eth",
+    body: "Multi-chain support is a game changer. My Ethereum, Polygon, and Base assets all in one place. This is the future.",
     img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
   },
   {
     name: "Monica Reeves",
     username: "@monicareeves",
-    body: "Can't believe how polished the v0 generated components look. Clients are impressed every time.",
+    body: "The generated will document looks professional and includes all my crypto details. My executor actually understands what to do now.",
     img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face",
   },
   {
     name: "James Roy",
-    username: "@jamesrdev",
-    body: "v0 is a lifesaver when deadlines are tight. Generate a component, tweak, and deploy instantly.",
+    username: "@jameshodler",
+    body: "Protecting my digital legacy shouldn't be this easy. Legacy makes estate planning simple for the Web3 generation.",
     img: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face",
   },
 ]
@@ -109,7 +109,7 @@ export function TestimonialsSection() {
           </h2>
 
           <p className="mt-5 relative z-10 text-center text-lg text-zinc-500">
-            From intuitive design to powerful features, our app has become an essential tool for users around the world.
+            Crypto holders and Web3 enthusiasts trust Legacy to protect their digital assets and secure their family's future.
           </p>
         </div>
 
