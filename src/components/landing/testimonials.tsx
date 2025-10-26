@@ -4,7 +4,7 @@ const testimonials = [
   {
     name: "Arjun Mehta",
     username: "@arjun_crypto",
-    body: "Finally, a will platform that understands crypto! Added my ETH and NFT collection in minutes. My family won't lose my digital assets now.",
+    body: "Finally, a will platform that understands crypto! Added my ETH and NFT collection in minutes. My family wont lose my digital assets now.",
     img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
   },
   {
@@ -16,13 +16,13 @@ const testimonials = [
   {
     name: "Devon Carter",
     username: "@devoncarter",
-    body: "As a Bitcoin holder since 2015, I've been worried about what happens to my crypto. Legacy solved this problem perfectly.",
+    body: "As a Bitcoin holder since 2015, I have been worried about what happens to my crypto. Legacy solved this problem perfectly.",
     img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
   },
   {
     name: "Priya Shah",
     username: "@priyabuilds",
-    body: "Love that I can include both my house AND my NFT portfolio in one will. Traditional lawyers don't get Web3, Legacy does.",
+    body: "Love that I can include both my house AND my NFT portfolio in one will. Traditional lawyers dont get Web3, Legacy does.",
     img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
   },
   {
@@ -52,7 +52,7 @@ const testimonials = [
   {
     name: "James Roy",
     username: "@jameshodler",
-    body: "Protecting my digital legacy shouldn't be this easy. Legacy makes estate planning simple for the Web3 generation.",
+    body: "Protecting my digital legacy should not be this easy. Legacy makes estate planning simple for the Web3 generation.",
     img: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face",
   },
 ]
@@ -109,7 +109,7 @@ export function TestimonialsSection() {
           </h2>
 
           <p className="mt-5 relative z-10 text-center text-lg text-zinc-500">
-            Crypto holders and Web3 enthusiasts trust Legacy to protect their digital assets and secure their family's future.
+            Crypto holders and Web3 enthusiasts trust Legacy to protect their digital assets and secure their familys future.
           </p>
         </div>
 
