@@ -145,8 +145,34 @@ function LastWillAndTestament({
               {/* Date and Location */}
               <div className="mb-10 text-center text-sm">
                 <p><span className="font-semibold">Date:</span> {personalInfo.dateOfBirth}</p>
-                <p><span className="font-semibold">Location:</span> {location}</p>
+                <p><span className="font-semibold">Location:</span> {personalInfo.address}</p>
               </div>
+
+              {/*Assets */}
+              {assets.length > 0 && (
+                <div className="mb-10">
+                  <h2 className="text-2xl font-bold mb-4 border-b-2 border-yellow-700 pb-2"> Assets & Beneficiaries</h2>
+                  <div className="space-y-4">
+                    {assets.map((asset, i) => (
+                      <div key={i} className="ml-4 pb-3 border-b border-yellow-200">
+                        <p className="font-semibold">{i + 1}. {asset.description}</p>
+                        <p className="text-sm ml-4"><strong>Type:</strong> {asset.type}</p>
+                        <p className="text-sm ml-4"><strong>Location:</strong> {asset.location}</p>
+                        <p className="text-sm ml-4"><strong>Description:</strong> {asset.description}</p>
+                        <p className="text-sm ml-4"><strong>Estimated Value:</strong> ${asset.value}</p>
+                        {asset.beneficiaries && asset.beneficiaries.length > 0 && (
+                          <div className="ml-4 mt-2">
+                            <p className="text-sm font-semibold">Beneficiaries:</p>
+                            {asset.beneficiaries.map((b, bIdx) => (
+                              <p key={bIdx} className="text-xs ml-4">• {b.name} ({b.relationship}) - Share: {b.share}</p>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* On-Chain Assets */}
               {onChainAssets.length > 0 && (
@@ -174,12 +200,39 @@ function LastWillAndTestament({
                 </div>
               )}
 
+
+
               {/* Executor */}
-              <div className="mb-10">
-                <h2 className="text-2xl font-bold mb-4 border-b-2 border-yellow-700 pb-2">Executor</h2>
-                <p className="ml-4 font-semibold">{executor.name}</p>
-                <p className="text-sm ml-8"><strong>Relationship:</strong> {executor.relationship}</p>
-              </div>
+              {executor && executor.name && executor.relationship && executor.address && (
+                <div className="mb-10">
+                  <h2 className="text-2xl font-bold mb-4 border-b-2 border-yellow-700 pb-2">Executor</h2>
+                  <p className="ml-4 font-semibold">{executor.name}</p>
+                  <p className="text-sm ml-8"><strong>Relationship:</strong> {executor.relationship}</p>
+                </div>)}
+
+              {/* Guardians */}
+              {guardians && guardians.length > 0 && guardians.every(guardian => guardian.name && guardian.relationship) && (
+                <div className="mb-10">
+                  <h2 className="text-2xl font-bold mb-4 border-b-2 border-yellow-700 pb-2">Guardians</h2>
+                  <div className="space-y-4">
+                    {guardians.map((guardian, i) => (
+                      <div key={i} className="ml-4 pb-3 border-b border-yellow-200">
+                        <p className="font-semibold">{i + 1}. {guardian.name}</p>
+                        <p className="text-sm ml-4"><strong>Relationship:</strong> {guardian.relationship}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Special Instructions */}
+              {specialInstructions && specialInstructions.length > 0 && (
+                <div className="mb-10">
+                  <h2 className="text-2xl font-bold mb-4 border-b-2 border-yellow-700 pb-2">Special Instructions</h2>
+                  <p className="ml-4 font-semibold">{specialInstructions}</p>
+                </div>
+              )}
+
 
               {/* Signature */}
               <div className="mt-16 pt-8 border-t-2 border-yellow-700">
@@ -201,7 +254,7 @@ function LastWillAndTestament({
               <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12">
                 <div className="relative w-32 h-32">
                   <div className="absolute inset-0 rounded-full blur-md"
-                    style={{ backgroundColor: stampColor, opacity: 0.2, transform: "scale(1.1)" }} />
+                    style={{ backgroundColor: stampColor, opacity: 0.8, transform: "scale(1.1)" }} />
                   <svg className="absolute inset-0 w-full h-full" viewBox="0 0 120 120">
                     <defs>
                       <radialGradient id="sealGradient" cx="40%" cy="40%">

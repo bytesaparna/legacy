@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import "@/styles/globals.css"
 import { Providers } from "./providers"
+import { Toaster } from "sonner"
 
 export const metadata: Metadata = {
   title: "Legacy",
@@ -30,7 +31,10 @@ html {
         `}</style>
       </head>
       <body className="dark">
-        <Providers>{children}</Providers>
+
+        <Providers>
+          <Toaster />
+          {children}</Providers>
       </body>
     </html>
   )

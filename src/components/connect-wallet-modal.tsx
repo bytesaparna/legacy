@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { Button } from "./ui/button"
 import { Wallet, X } from "lucide-react"
 import { Card } from "./ui/card"
-import ConnectWalletButton from "./modules/connect-button/button"
+import ConnectWalletButton from "./connect-button/button"
 import { useAccount } from "wagmi"
 import { useEffect } from "react"
 

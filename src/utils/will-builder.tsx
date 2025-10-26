@@ -1,10 +1,10 @@
 import { FileText, Heart, Home, Shield, User, Coins } from "lucide-react";
-import { PersonalInfo } from "@/components/modules/will-builder/personal-info"
-import { Assets } from "@/components/modules/will-builder/assets"
-import { OnChainAssets } from "@/components/modules/will-builder/onchain-assets"
-import { Executor } from "@/components/modules/will-builder/executor"
-import { Instructions } from "@/components/modules/will-builder/instructions"
-import { Review } from "@/components/modules/will-builder/review"
+import { PersonalInfo } from "@/components/will-builder/personal-info"
+import { Assets } from "@/components/will-builder/assets"
+import { OnChainAssets } from "@/components/will-builder/onchain-assets"
+import { Executor } from "@/components/will-builder/executor"
+import { Instructions } from "@/components/will-builder/instructions"
+import { Review } from "@/components/will-builder/review"
 import { motion } from "framer-motion"
 
 

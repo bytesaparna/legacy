@@ -16,10 +16,15 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
+  // Wellness Check
+  lastWellnessCheck DateTime?
+  wellnessCheckEnabled Boolean @default(true)
+
   // Relations
   wills Will[]
 
   @@index([walletAddress])
+  @@index([lastWellnessCheck])
 }
 
 model Will {

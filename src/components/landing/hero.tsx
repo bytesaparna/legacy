@@ -30,19 +30,8 @@ export default function Hero() {
         if (mounted && isConnected && address) {
             // Close connect wallet modal when wallet connects
             setConnectWalletModalOpen(false)
-            
-            // Check if user is registered after wallet is connected
-            if (!isLoading) {
-                if (!isRegisteredUser) {
-                    // User not registered - show registration popup
-                    setIsRegistrationPopupOpen(true)
-                } else {
-                    // User is registered - navigate to will-builder
-                    router.push('/will-builder')
-                }
-            }
         }
-    }, [mounted, isConnected, address, isRegisteredUser, isLoading, router])
+    }, [mounted, isConnected, address])
 
     if (!mounted) {
         return null

@@ -13,7 +13,7 @@ import Link from "next/link"
 export const Assets = () => {
   const { updateWillData, willData } = useWillDataStore()
 
-  const updateAsset = (index: number, field: string, value: string) => {
+  const updateAsset = (index: number, field: string, value: string | number) => {
     const newAssets = willData.assets.map((asset, idx) => {
       if (idx === index) {
         return {
@@ -211,7 +211,7 @@ export const Assets = () => {
                     }}
                   >
                     <SelectTrigger className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20">
-                      <SelectValue placeholder="Select type" />
+                      <SelectValue placeholder="Select type"/>
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="real-estate">Real Estate</SelectItem>
@@ -272,10 +272,11 @@ export const Assets = () => {
                 >
                   <Label>Estimated Value</Label>
                   <Input
+                    type="number"
                     placeholder="$0"
                     value={asset.value}
                     onChange={(e) => {
-                      updateAsset(index, "value", e.target.value)
+                      updateAsset(index, "value", e.target.value ? parseFloat(e.target.value) : 0)
                     }}
                     className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20"
                   />
