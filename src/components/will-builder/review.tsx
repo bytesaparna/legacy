@@ -8,13 +8,16 @@ import { motion } from "framer-motion"
 import { AlertCircle, CheckCircle, FileText, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { api } from "@/trpc/trpc"
-import { useAccount } from "wagmi"
+import { useAccount, useWalletClient } from "wagmi"
 import { toast } from "sonner"
+import { publishWill } from "@/lib/somnia/publish-will"
 
 export const Review = () => {
     const { willData } = useWillDataStore()
     const [openWillDocument, setOpenWillDocument] = useState(false)
     const { address } = useAccount()
+    const { data: walletClient } = useWalletClient()
+    const [willGenerated, setWillGenerated] = useState(false)
 
     const { data: userData } = api.user.getUser.useQuery(
         { walletAddress: address || "" },
@@ -83,6 +86,25 @@ export const Review = () => {
             return
         }
 
+        if (!walletClient) {
+            toast.error("Wallet client not ready", {
+                style: {
+                    background: "#000",
+                    color: "#fff",
+                    borderRadius: "0.5rem",
+                    padding: "0.5rem",
+                    fontSize: "0.875rem",
+                    fontWeight: "bold",
+                },
+                duration: 5000,
+                position: "top-right",
+                icon: <AlertCircle className="w-4 h-4" />,
+                className: "bg-red-600 text-white",
+                description: "Please ensure your wallet is connected and try again",
+            })
+            return
+        }
+
         try {
             await createWillMutation.mutateAsync({
                 userId: userData?.id || address, // Use user ID if available, otherwise wallet address (will auto-create user)
@@ -138,8 +160,55 @@ export const Review = () => {
                 specialInstructions: willData.specialInstructions,
                 status: "completed"
             })
+            setWillGenerated(true)
+            // toast.info("Publishing will to Somnia blockchain...", {
+            //     style: {
+            //         background: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)",
+            //         color: "#fff",
+            //         borderRadius: "0.75rem",
+            //         padding: "1rem",
+            //         fontSize: "0.875rem",
+            //         fontWeight: "600",
+            //     },
+            //     duration: 3000,
+            //     position: "top-right",
+            // })
+
+            // const { tx, willId, data, encodedWillData } = await publishWill(walletClient, willData)
+
+            // console.log("Will published:", { tx, willId, data, encodedWillData })
+
+            // toast.success("Will published to blockchain!", {
+            //     style: {
+            //         background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+            //         color: "#fff",
+            //         borderRadius: "0.75rem",
+            //         padding: "1rem",
+            //         fontSize: "0.875rem",
+            //         fontWeight: "600",
+            //     },
+            //     duration: 5000,
+            //     position: "top-right",
+            //     icon: <CheckCircle className="w-5 h-5" />,
+            //     description: `Transaction: ${tx}`,
+            // })
+
         } catch (error) {
             console.error("Error in handleGenerateWill:", error)
+            const errorMessage = error instanceof Error ? error.message : "Unknown error occurred"
+            toast.error(`Failed to publish will: ${errorMessage}`, {
+                style: {
+                    background: "#000",
+                    color: "#fff",
+                    borderRadius: "0.5rem",
+                    padding: "0.5rem",
+                    fontSize: "0.875rem",
+                    fontWeight: "bold",
+                },
+                duration: 7000,
+                position: "top-right",
+                icon: <AlertCircle className="w-4 h-4" />,
+            })
         }
     }
 
@@ -148,7 +217,7 @@ export const Review = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="space-y-6 text-black"
+            className="space-y-6 text-white"
         >
             <div className="text-center mb-8">
                 <motion.h3
@@ -160,7 +229,7 @@ export const Review = () => {
                     Your Will is Ready!
                 </motion.h3>
                 <motion.p
-                    className="text-slate-600"
+                    className="text-slate-200"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
@@ -175,14 +244,14 @@ export const Review = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
             >
-                <Card className="p-6">
+                <Card className="p-6 bg-zinc-900/50 text-primary shadow-[0_0_10px_oklch(0.6716_0.1368_48.513/0.2)]">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <CheckCircle className="w-5 h-5 text-green-600" />
                             Will Summary
                         </CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-4">
+                    <CardContent>
                         <motion.div
                             className="space-y-2 flex justify-between"
                             variants={{
@@ -220,12 +289,12 @@ export const Review = () => {
                 <Button
                     className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
                     onClick={handleGenerateWill}
-                    disabled={createWillMutation.isPending}
+                    disabled={createWillMutation.isPending || willGenerated}
                 >
                     {createWillMutation.isPending ? (
                         <>
                             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                            Saving...
+                            Generating...
                         </>
                     ) : (
                         <>
@@ -236,17 +305,17 @@ export const Review = () => {
                 </Button>
                 <Button
                     variant="outline"
-                    className="flex-1 bg-transparent"
+                    className="flex-1 !bg-primary text-black hover:text-black hover:to-black/20"
                     onClick={handleGenerateWill}
-                    disabled={createWillMutation.isPending}
+                    disabled={createWillMutation.isPending || !willGenerated}
                 >
                     {createWillMutation.isPending ? (
                         <>
                             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                            Saving...
+                            Minting...
                         </>
                     ) : (
-                        "Save as Draft"
+                        "Mint on Blockchain"
                     )}
                 </Button>
             </motion.div>

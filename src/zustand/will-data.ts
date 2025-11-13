@@ -133,7 +133,7 @@ export const useWillDataStore = create<WillDataStore>((set) => ({
             step: 1
         }),
     step: 1,
-    maximumStep: 6,
+    maximumStep: 5,
     setStep: (step: number) => {
         set(() => ({
             step

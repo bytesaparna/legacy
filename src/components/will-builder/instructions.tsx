@@ -12,9 +12,9 @@ export const Instructions = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="space-y-6 text-black"
+            className="space-y-6"
         >
-            <div className="text-center mb-8">
+            <div className="text-center mb-8 text-white font-serif">
                 <motion.h3
                     className="text-2xl font-bold mb-2"
                     initial={{ opacity: 0, y: 20 }}
@@ -24,7 +24,7 @@ export const Instructions = () => {
                     Special Instructions
                 </motion.h3>
                 <motion.p
-                    className="text-slate-600"
+                    className="text-slate-200"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
@@ -34,7 +34,7 @@ export const Instructions = () => {
             </div>
             <Textarea
                 placeholder="Add Special Instructions"
-                className="resize-none !bg-primary/30 focus:scale-[1.02] focus:shadow-lg"
+                className="resize-none transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 shadow-lg shadow-black/20 rounded-xl text-white placeholder-white/70 p-3 min-h-[50px]"
                 value={willData.specialInstructions}
                 onChange={(e) => updateWillData({ specialInstructions: e.target.value })}
             />

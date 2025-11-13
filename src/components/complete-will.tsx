@@ -1,6 +1,6 @@
 "use client"
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog"
 
 
 interface LastWillProps {
@@ -67,7 +67,7 @@ export default function LastWillDialog(props: LastWillProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       {/* Modal Content */}
-      <DialogContent className="h-[80vh] overflow-y-auto p-0 bg-transparent w-full !max-w-4xl mt-14">
+      <DialogContent className="h-[90vh] max-h-[90vh] overflow-y-auto !bg-black w-full !max-w-5xl px-4 mt-20">
         <DialogHeader className="hidden">
           <DialogTitle>Last Will and Testament</DialogTitle>
         </DialogHeader>
@@ -87,189 +87,157 @@ function LastWillAndTestament({
   guardians,
   specialInstructions,
   onChainAssets,
-  location = "State of [Location]",
-  backgroundColor = "#F5E6D3",
   stampColor = "#DC143C"
 }: LastWillProps) {
   return (
-    <div className="flex items-center justify-center bg-gray-100 p-4 md:p-8">
+    <div className="min-h-full">
       {/* Main Document Container */}
-      <div className="relative !w-full">
-        <div
-          className="relative bg-cover bg-center shadow-2xl"
-          style={{
-            backgroundColor: backgroundColor,
-            backgroundImage: `
-              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise" seed="2"/><feColorMatrix in="noise" type="saturate" values="0"/></filter><rect width="100" height="100" fill="%23F5E6D3" filter="url(%23noise)" opacity="0.03"/></svg>'),
-              radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.15) 100%),
-              linear-gradient(135deg, rgba(218, 165, 32, 0.08) 0%, rgba(184, 134, 11, 0.04) 50%, rgba(139, 69, 19, 0.06) 100%),
-              repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 2px,
-                rgba(139, 69, 19, 0.01) 2px,
-                rgba(139, 69, 19, 0.01) 4px
-              )
-            `,
-            backgroundBlendMode: "multiply, normal, normal, normal",
-          }}
-        >
-          {/* Gold Border Frame */}
-          <div className="border-8 border-yellow-600 shadow-inner" style={{ borderColor: "#B8860B" }}>
-            {/* Corners */}
-            <div className="absolute top-3 left-3 w-8 h-8 border-t-2 border-l-2 border-yellow-700" style={{ borderColor: "#8B4513" }} />
-            <div className="absolute top-3 right-3 w-8 h-8 border-t-2 border-r-2 border-yellow-700" style={{ borderColor: "#8B4513" }} />
-            <div className="absolute bottom-3 left-3 w-8 h-8 border-b-2 border-l-2 border-yellow-700" style={{ borderColor: "#8B4513" }} />
-            <div className="absolute bottom-3 right-3 w-8 h-8 border-b-2 border-r-2 border-yellow-700" style={{ borderColor: "#8B4513" }} />
+      <div
+        className="min-h-full"
+        style={{
+          backgroundImage: 'url(/legacy-bg.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          // backgroundAttachment: 'local',
+          backgroundColor: '#000000'
+        }}
+      >
+        {/* Document Content */}
+        <div className="w-full">
+          <div className="text-black px-8 py-72" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>
+            {/* Title */}
+            <div className="text-center">
+              <h1 className="text-4xl font-serif md:text-5xl font-bold tracking-wide mb-8" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.15)' }}>Last Will and Testament</h1>
+            </div>
 
-            {/* Document Content */}
-            <div className="p-12 md:p-16 font-serif text-gray-900">
-              {/* Title */}
-              <div className="text-center mb-8">
-                <h1 className="text-5xl md:text-6xl font-bold mb-4 tracking-wide">Last Will and Testament</h1>
-                <div className="flex justify-center items-center gap-4 mb-6">
-                  <div className="flex-1 h-px bg-yellow-700" />
-                  <span className="text-yellow-700 text-2xl">✦</span>
-                  <div className="flex-1 h-px bg-yellow-700" />
+            {/* Testator Info */}
+            <div className="mb-8 text-center max-w-3xl mx-auto">
+              <p className="text-lg mb-2">
+                <span className="font-semibold">I, {personalInfo.fullName}</span>, being of sound mind and memory, do hereby
+                make, publish, and declare this to be my Last Will and Testament.
+              </p>
+            </div>
+
+            {/* Date and Location */}
+            <div className="mb-10 max-w-4xl mx-auto text-center">
+              <p><span className="font-semibold">Date:</span> {personalInfo.dateOfBirth}</p>
+              <p><span className="font-semibold">Location:</span> {personalInfo.address}</p>
+            </div>
+
+            {/*Assets */}
+            {assets.length > 0 && (
+              <div className="mb-10 max-w-2xl mx-auto">
+                <h2 className="text-2xl font-bold mb-4 pb-2 text-center"> Assets & Beneficiaries</h2>
+                <div className="space-y-4">
+                  {assets.map((asset, i) => (
+                    <div key={i} className="ml-4 pb-3 text-start">
+                      <p className="font-semibold ml-6">{i + 1}. {asset.description}</p>
+                      <p className="text-sm ml-6"><strong>Type:</strong> {asset.type}</p>
+                      <p className="text-sm ml-6"><strong>Location:</strong> {asset.location}</p>
+                      <p className="text-sm ml-6"><strong>Description:</strong> {asset.description}</p>
+                      <p className="text-sm ml-6"><strong>Estimated Value:</strong> ${asset.value}</p>
+                      {asset.beneficiaries && asset.beneficiaries.length > 0 && (
+                        <div className="ml-4 mt-2">
+                          <p className="text-sm font-semibold">Beneficiaries:</p>
+                          {asset.beneficiaries.map((b, bIdx) => (
+                            <p key={bIdx} className="text-xs ml-4">• {b.name} ({b.relationship}) - Share: {b.share}</p>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
+            )}
 
-              {/* Testator Info */}
-              <div className="mb-8 text-center">
-                <p className="text-lg mb-2">
-                  <span className="font-semibold">I, {personalInfo.fullName}</span>, being of sound mind and memory, do hereby
-                  make, publish, and declare this to be my Last Will and Testament.
-                </p>
-              </div>
-
-              {/* Date and Location */}
-              <div className="mb-10 text-center text-sm">
-                <p><span className="font-semibold">Date:</span> {personalInfo.dateOfBirth}</p>
-                <p><span className="font-semibold">Location:</span> {personalInfo.address}</p>
-              </div>
-
-              {/*Assets */}
-              {assets.length > 0 && (
-                <div className="mb-10">
-                  <h2 className="text-2xl font-bold mb-4 border-b-2 border-yellow-700 pb-2"> Assets & Beneficiaries</h2>
-                  <div className="space-y-4">
-                    {assets.map((asset, i) => (
-                      <div key={i} className="ml-4 pb-3 border-b border-yellow-200">
-                        <p className="font-semibold">{i + 1}. {asset.description}</p>
-                        <p className="text-sm ml-4"><strong>Type:</strong> {asset.type}</p>
-                        <p className="text-sm ml-4"><strong>Location:</strong> {asset.location}</p>
-                        <p className="text-sm ml-4"><strong>Description:</strong> {asset.description}</p>
-                        <p className="text-sm ml-4"><strong>Estimated Value:</strong> ${asset.value}</p>
-                        {asset.beneficiaries && asset.beneficiaries.length > 0 && (
-                          <div className="ml-4 mt-2">
-                            <p className="text-sm font-semibold">Beneficiaries:</p>
-                            {asset.beneficiaries.map((b, bIdx) => (
-                              <p key={bIdx} className="text-xs ml-4">• {b.name} ({b.relationship}) - Share: {b.share}</p>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* On-Chain Assets */}
-              {onChainAssets.length > 0 && (
-                <div className="mb-10">
-                  <h2 className="text-2xl font-bold mb-4 border-b-2 border-yellow-700 pb-2">On-Chain Assets & Cryptocurrency</h2>
-                  <div className="space-y-4">
-                    {onChainAssets.map((asset, i) => (
-                      <div key={i} className="ml-4 pb-3 border-b border-yellow-200">
-                        <p className="font-semibold">{i + 1}. {asset.description}</p>
-                        <p className="text-sm ml-4"><strong>Type:</strong> {asset.assetType}</p>
-                        <p className="text-sm ml-4"><strong>Blockchain:</strong> {asset.blockchain}</p>
-                        <p className="text-sm ml-4"><strong>Wallet Address:</strong> {asset.walletAddress}</p>
-                        <p className="text-sm ml-4"><strong>Estimated Value:</strong> ${asset.estimatedValue}</p>
-                        {asset.beneficiaries.length > 0 && (
-                          <div className="ml-4 mt-2">
-                            <p className="text-sm font-semibold">Beneficiaries:</p>
-                            {asset.beneficiaries.map((b, bIdx) => (
-                              <p key={bIdx} className="text-xs ml-4">• {b.name} ({b.relationship}) - {b.share} - Wallet: {b.walletAddress}</p>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-
-
-              {/* Executor */}
-              {executor && executor.name && executor.relationship && executor.address && (
-                <div className="mb-10">
-                  <h2 className="text-2xl font-bold mb-4 border-b-2 border-yellow-700 pb-2">Executor</h2>
-                  <p className="ml-4 font-semibold">{executor.name}</p>
-                  <p className="text-sm ml-8"><strong>Relationship:</strong> {executor.relationship}</p>
-                </div>)}
-
-              {/* Guardians */}
-              {guardians && guardians.length > 0 && guardians.every(guardian => guardian.name && guardian.relationship) && (
-                <div className="mb-10">
-                  <h2 className="text-2xl font-bold mb-4 border-b-2 border-yellow-700 pb-2">Guardians</h2>
-                  <div className="space-y-4">
-                    {guardians.map((guardian, i) => (
-                      <div key={i} className="ml-4 pb-3 border-b border-yellow-200">
-                        <p className="font-semibold">{i + 1}. {guardian.name}</p>
-                        <p className="text-sm ml-4"><strong>Relationship:</strong> {guardian.relationship}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Special Instructions */}
-              {specialInstructions && specialInstructions.length > 0 && (
-                <div className="mb-10">
-                  <h2 className="text-2xl font-bold mb-4 border-b-2 border-yellow-700 pb-2">Special Instructions</h2>
-                  <p className="ml-4 font-semibold">{specialInstructions}</p>
-                </div>
-              )}
-
-
-              {/* Signature */}
-              <div className="mt-16 pt-8 border-t-2 border-yellow-700">
-                <div className="grid grid-cols-2 gap-8">
-                  <div>
-                    <div className="h-16 mb-2" />
-                    <p className="border-t-2 border-gray-900 text-center text-sm font-semibold">Testator Signature</p>
-                    <p className="text-center text-xs text-gray-600 mt-1">{personalInfo.fullName}</p>
-                  </div>
-                  <div>
-                    <div className="h-16 mb-2" />
-                    <p className="border-t-2 border-gray-900 text-center text-sm font-semibold">Date Signed</p>
-                    <p className="text-center text-xs text-gray-600 mt-1">_________________</p>
-                  </div>
+            {/* On-Chain Assets */}
+            {onChainAssets.length > 0 && (
+              <div className="mb-10 max-w-2xl mx-auto">
+                <h2 className="text-2xl font-bold mb-4 pb-2 text-center">On-Chain Assets & Cryptocurrency</h2>
+                <div className="space-y-4">
+                  {onChainAssets.map((asset, i) => (
+                    <div key={i} className="ml-6 pb-3">
+                      <p className="font-semibold ml-6">{i + 1}. {asset.description}</p>
+                      <p className="text-sm ml-6"><strong>Type:</strong> {asset.assetType}</p>
+                      <p className="text-sm ml-6"><strong>Blockchain:</strong> {asset.blockchain}</p>
+                      <p className="text-sm ml-6"><strong>Wallet Address:</strong> {asset.walletAddress}</p>
+                      <p className="text-sm ml-6"><strong>Estimated Value:</strong> ${asset.estimatedValue}</p>
+                      {asset.beneficiaries.length > 0 && (
+                        <div className="ml-4 mt-2">
+                          <p className="text-sm font-semibold">Beneficiaries:</p>
+                          {asset.beneficiaries.map((b, bIdx) => (
+                            <p key={bIdx} className="text-xs ml-4">• {b.name} ({b.relationship}) - {b.share} - Wallet: {b.walletAddress}</p>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
+            )}
 
-              {/* Seal */}
-              <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12">
-                <div className="relative w-32 h-32">
-                  <div className="absolute inset-0 rounded-full blur-md"
-                    style={{ backgroundColor: stampColor, opacity: 0.8, transform: "scale(1.1)" }} />
-                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 120 120">
-                    <defs>
-                      <radialGradient id="sealGradient" cx="40%" cy="40%">
-                        <stop offset="0%" stopColor={stampColor} stopOpacity="0.9" />
-                        <stop offset="70%" stopColor={stampColor} stopOpacity="0.7" />
-                        <stop offset="100%" stopColor={stampColor} stopOpacity="0.5" />
-                      </radialGradient>
-                    </defs>
-                    <circle cx="60" cy="60" r="55" fill="none" stroke={stampColor} strokeWidth="2.5" opacity="0.8" />
-                    <circle cx="60" cy="60" r="38" fill="url(#sealGradient)" />
-                    <text x="60" y="68" textAnchor="middle" fill="white" fontSize="13" fontWeight="bold" fontFamily="serif">
-                      OFFICIAL
-                    </text>
-                  </svg>
+            {/* Executor */}
+            {executor && executor.name && executor.relationship && executor.address && (
+              <div className="mb-10 max-w-2xl mx-auto">
+                <h2 className="text-2xl font-bold mb-4 pb-2 text-center">Executor</h2>
+                <p className="ml-4 font-semibold">{executor.name}</p>
+                <p className="text-sm ml-8"><strong>Relationship:</strong> {executor.relationship}</p>
+              </div>)}
+
+            {/* Guardians */}
+            {guardians && guardians.length > 0 && guardians.every(guardian => guardian.name && guardian.relationship) && (
+              <div className="mb-10 max-w-2xl mx-auto">
+                <h2 className="text-2xl font-bold mb-4 pb-2 text-center">Guardians</h2>
+                <div className="space-y-4">
+                  {guardians.map((guardian, i) => (
+                    <div key={i} className="ml-4 pb-3">
+                      <p className="font-semibold">{i + 1}. {guardian.name}</p>
+                      <p className="text-sm ml-4"><strong>Relationship:</strong> {guardian.relationship}</p>
+                    </div>
+                  ))}
                 </div>
+              </div>
+            )}
+
+            {/* Special Instructions */}
+            {specialInstructions && specialInstructions.length > 0 && (
+              <div className="mb-10 max-w-2xl mx-auto">
+                <h2 className="text-2xl font-bold mb-4 pb-2 text-center">Special Instructions</h2>
+                <p className="ml-4 font-semibold">{specialInstructions}</p>
+              </div>
+            )}
+
+
+            {/* Signature */}
+            <div className="mt-16 pt-8 max-w-2xl mx-auto">
+              <div className="grid grid-cols-2 gap-8">
+                <div>
+                  <div className="h-16 mb-2" />
+                  <p className="text-center text-2xl font-mono text-black rotate-[-20deg] mb-8">{personalInfo.fullName}</p>
+                  <p className="border-t-2 border-gray-900 text-center text-sm font-semibold">Testator Signature</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Seal */}
+            <div className="relative bottom-24 left-1/2 md:bottom-44 md:left-1/2">
+              <div className="relative w-32 h-32">
+                <div className="absolute inset-0 rounded-full blur-md"
+                  style={{ backgroundColor: stampColor, opacity: 0.8, transform: "scale(1.1)" }} />
+                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 120 120">
+                  <defs>
+                    <radialGradient id="sealGradient" cx="40%" cy="40%">
+                      <stop offset="0%" stopColor={stampColor} stopOpacity="0.9" />
+                      <stop offset="70%" stopColor={stampColor} stopOpacity="0.7" />
+                      <stop offset="100%" stopColor={stampColor} stopOpacity="0.5" />
+                    </radialGradient>
+                  </defs>
+                  <circle cx="60" cy="60" r="55" fill="none" stroke={stampColor} strokeWidth="2.5" opacity="0.8" />
+                  <circle cx="60" cy="60" r="38" fill="url(#sealGradient)" />
+                  <text x="60" y="68" textAnchor="middle" fill="white" fontSize="13" fontWeight="bold" fontFamily="serif">
+                    OFFICIAL
+                  </text>
+                </svg>
               </div>
             </div>
           </div>

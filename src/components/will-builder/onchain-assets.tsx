@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { useWillDataStore } from "@/zustand/will-data"
 import { motion } from "framer-motion"
-import { Wallet, Plus, Trash2, UserPlus, Coins } from "lucide-react"
+import { Wallet, Plus, Trash2, UserPlus, Coins, PlusIcon } from "lucide-react"
 
 export const OnChainAssets = () => {
   const { updateWillData, willData } = useWillDataStore()
@@ -140,18 +140,17 @@ export const OnChainAssets = () => {
       exit={{ opacity: 0, x: -20 }}
       className="space-y-6"
     >
-      <div className="text-center mb-8 text-black">
+      <div className="text-center mb-8 text-white font-serif">
         <motion.h3
           className="text-2xl font-bold mb-2 flex items-center justify-center gap-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <Coins className="w-7 h-7" />
           On-Chain Assets & Crypto
         </motion.h3>
         <motion.p
-          className="text-slate-600"
+          className="text-slate-200"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
@@ -186,7 +185,7 @@ export const OnChainAssets = () => {
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
           >
-            <Card className="p-4 bg-gradient-to-br from-primary/20 to-primary/60 text-black border-2 border-purple-200">
+            <Card className="p-4 bg-zinc-900/50 text-primary shadow-[0_0_10px_oklch(0.6716_0.1368_48.513/0.2)] mt-8">
               <div className="grid md:grid-cols-3 gap-4">
                 {/* Asset Type */}
                 <div className="space-y-2">
@@ -197,7 +196,7 @@ export const OnChainAssets = () => {
                       updateOnChainAsset(index, "assetType", value)
                     }}
                   >
-                    <SelectTrigger className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-white">
+                    <SelectTrigger className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -219,7 +218,7 @@ export const OnChainAssets = () => {
                       updateOnChainAsset(index, "blockchain", value)
                     }}
                   >
-                    <SelectTrigger className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-white">
+                    <SelectTrigger className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white">
                       <SelectValue placeholder="Select blockchain" />
                     </SelectTrigger>
                     <SelectContent>
@@ -245,7 +244,7 @@ export const OnChainAssets = () => {
                     onChange={(e) => {
                       updateOnChainAsset(index, "tokenSymbol", e.target.value)
                     }}
-                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-white"
+                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white placeholder-white/70"
                   />
                 </div>
 
@@ -258,7 +257,7 @@ export const OnChainAssets = () => {
                     onChange={(e) => {
                       updateOnChainAsset(index, "walletAddress", e.target.value)
                     }}
-                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-white font-mono text-sm"
+                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white placeholder-white/70 font-mono text-sm"
                   />
                 </div>
 
@@ -272,7 +271,7 @@ export const OnChainAssets = () => {
                     onChange={(e) => {
                       updateOnChainAsset(index, "estimatedValue", parseFloat(e.target.value) || 0)
                     }}
-                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-white"
+                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white placeholder-white/70"
                   />
                 </div>
 
@@ -285,7 +284,7 @@ export const OnChainAssets = () => {
                     onChange={(e) => {
                       updateOnChainAsset(index, "contractAddress", e.target.value)
                     }}
-                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-white font-mono text-sm"
+                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white placeholder-white/70 font-mono text-sm"
                   />
                 </div>
 
@@ -298,7 +297,7 @@ export const OnChainAssets = () => {
                     onChange={(e) => {
                       updateOnChainAsset(index, "tokenId", e.target.value)
                     }}
-                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-white"
+                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white placeholder-white/70"
                   />
                 </div>
 
@@ -311,7 +310,7 @@ export const OnChainAssets = () => {
                     onChange={(e) => {
                       updateOnChainAsset(index, "description", e.target.value)
                     }}
-                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-white"
+                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white placeholder-white/70"
                     rows={2}
                   />
                 </div>
@@ -325,14 +324,14 @@ export const OnChainAssets = () => {
                     onChange={(e) => {
                       updateOnChainAsset(index, "notes", e.target.value)
                     }}
-                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-white"
+                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white placeholder-white/70"
                     rows={2}
                   />
                 </div>
               </div>
 
               {/* Beneficiaries Section */}
-              <div className="mt-6 border-t border-purple-200 pt-4">
+              <div className="mt-6 border-t border-white/20 pt-4">
                 <div className="flex items-center justify-between mb-3">
                   <Label className="text-base font-semibold flex items-center gap-2">
                     <UserPlus className="w-4 h-4" />
@@ -342,7 +341,7 @@ export const OnChainAssets = () => {
                     variant="outline"
                     size="sm"
                     onClick={() => addBeneficiary(index)}
-                    className="text-xs bg-purple-50 hover:bg-purple-100"
+                    className="text-xs !bg-white/5 border-none text-white hover:bg-white/10"
                   >
                     <Plus className="w-3 h-3 mr-1" />
                     Add Beneficiary
@@ -354,7 +353,7 @@ export const OnChainAssets = () => {
                 ) : (
                   <div className="space-y-3">
                     {asset.beneficiaries.map((beneficiary, beneficiaryIndex) => (
-                      <div key={beneficiaryIndex} className="grid grid-cols-4 gap-3 p-3 bg-white/70 rounded-lg border border-purple-100">
+                      <div key={beneficiaryIndex} className="grid grid-cols-4 gap-3 p-3 bg-white/10 rounded-lg border border-white/20">
                         <div className="space-y-1">
                           <Label className="text-xs">Name *</Label>
                           <Input
@@ -363,7 +362,7 @@ export const OnChainAssets = () => {
                             onChange={(e) =>
                               updateBeneficiary(index, beneficiaryIndex, "name", e.target.value)
                             }
-                            className="h-8 text-sm !bg-white"
+                            className="h-8 text-sm bg-white/10 border-white/20 text-white placeholder-white/60"
                           />
                         </div>
                         <div className="space-y-1">
@@ -374,7 +373,7 @@ export const OnChainAssets = () => {
                             onChange={(e) =>
                               updateBeneficiary(index, beneficiaryIndex, "relationship", e.target.value)
                             }
-                            className="h-8 text-sm !bg-white"
+                            className="h-8 text-sm bg-white/10 border-white/20 text-white placeholder-white/60"
                           />
                         </div>
                         <div className="space-y-1">
@@ -385,7 +384,7 @@ export const OnChainAssets = () => {
                             onChange={(e) =>
                               updateBeneficiary(index, beneficiaryIndex, "share", e.target.value)
                             }
-                            className="h-8 text-sm !bg-white"
+                            className="h-8 text-sm bg-white/10 border-white/20 text-white placeholder-white/60"
                           />
                         </div>
                         <div className="space-y-1">
@@ -397,13 +396,13 @@ export const OnChainAssets = () => {
                               onChange={(e) =>
                                 updateBeneficiary(index, beneficiaryIndex, "walletAddress", e.target.value)
                               }
-                              className="h-8 text-sm !bg-white font-mono"
+                              className="h-8 text-sm bg-white/10 border-white/20 text-white placeholder-white/60 font-mono"
                             />
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => removeBeneficiary(index, beneficiaryIndex)}
-                              className="h-8 w-8 p-0 hover:bg-red-50 hover:text-red-600"
+                              className="h-8 w-8 p-0 text-red-500 hover:bg-red-50 hover:text-red-600"
                             >
                               <Trash2 className="w-3 h-3" />
                             </Button>
@@ -420,7 +419,7 @@ export const OnChainAssets = () => {
                   variant="outline"
                   size="sm"
                   onClick={() => removeOnChainAsset(index)}
-                  className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                  className="text-red-500 hover:text-red-600 hover:bg-red-50"
                 >
                   <Trash2 className="w-4 h-4 mr-1" />
                   Remove Asset
@@ -431,17 +430,17 @@ export const OnChainAssets = () => {
         ))}
 
         <motion.div
-          className="mt-4 text-black"
+          className="mt-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2 }}
         >
           <Button
             variant="outline"
-            className="w-full bg-gradient-to-r from-purple-50 to-blue-50 hover:from-purple-100 hover:to-blue-100 border-2 border-purple-200"
+            className="w-full !bg-white/5 border-none text-white hover:bg-white/10"
             onClick={addOnChainAsset}
           >
-            <Wallet className="w-4 h-4 mr-2" />
+            <PlusIcon  />
             Add On-Chain Asset
           </Button>
         </motion.div>

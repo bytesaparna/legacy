@@ -12,9 +12,8 @@ export const steps = [
     { id: 1, title: "Personal Information", icon: User, description: "Basic details about you" },
     { id: 2, title: "Assets & Beneficiaries", icon: Home, description: "Your valuable possessions" },
     { id: 3, title: "On-Chain Assets & Crypto", icon: Coins, description: "Blockchain & cryptocurrency assets" },
-    { id: 4, title: "Executor & Guardians", icon: Shield, description: "Who manages your will" },
-    { id: 5, title: "Special Instructions", icon: Heart, description: "Personal wishes and notes" },
-    { id: 6, title: "Review & Generate", icon: FileText, description: "Finalize your will" },
+    { id: 4, title: "Special Instructions", icon: Heart, description: "Personal wishes and notes" },
+    { id: 5, title: "Review & Generate", icon: FileText, description: "Finalize your will" },
 ]
 
 
@@ -41,10 +40,8 @@ export const renderStepContent = (step: number) => {
         case 3:
             return (<OnChainAssets />)
         case 4:
-            return (<Executor />)
-        case 5:
             return (<Instructions />)
-        case 6:
+        case 5:
             return (<Review />)
         default:
             return (

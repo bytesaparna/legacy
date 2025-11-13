@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useWillDataStore } from "@/zustand/will-data"
 import { motion } from "framer-motion"
-import { Home, Plus, Trash2, UserPlus } from "lucide-react"
+import { Home, Plus, PlusIcon, Trash2, UserPlus } from "lucide-react"
 import Link from "next/link"
 
 export const Assets = () => {
@@ -139,7 +139,7 @@ export const Assets = () => {
       exit={{ opacity: 0, x: -20 }}
       className="space-y-6"
     >
-      <div className="text-center mb-8 text-black">
+      <div className="text-center mb-8 text-white font-serif">
         <motion.h3
           className="text-2xl font-bold mb-2"
           initial={{ opacity: 0, y: 20 }}
@@ -149,21 +149,13 @@ export const Assets = () => {
           Your Assets & Property
         </motion.h3>
         <motion.p
-          className="text-slate-600"
+          className="text-slate-200"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
           List all your valuable assets that you want to include in your will.
         </motion.p>
-        <div className="mt-4">
-          <Link href="/assets">
-            <Button variant="outline" className="bg-transparent">
-              <Home className="w-4 h-4 mr-2" />
-              Manage Assets in Detail
-            </Button>
-          </Link>
-        </div>
       </div>
 
       <motion.div
@@ -192,7 +184,7 @@ export const Assets = () => {
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
           >
-            <Card className="p-4 bg-primary/20 text-black bg-gradient-to-br from-primary/20 to-primary/60 ">
+            <Card className="p-4 mt-8 bg-zinc-900/50 text-primary shadow-[0_0_10px_oklch(0.6716_0.1368_48.513/0.2)]">
               <div className="grid md:grid-cols-4 gap-4">
                 <motion.div
                   className="space-y-2"
@@ -210,8 +202,8 @@ export const Assets = () => {
                       updateAsset(index, "type", value)
                     }}
                   >
-                    <SelectTrigger className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20">
-                      <SelectValue placeholder="Select type"/>
+                    <SelectTrigger className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white">
+                      <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="real-estate">Real Estate</SelectItem>
@@ -239,7 +231,7 @@ export const Assets = () => {
                     onChange={(e) => {
                       updateAsset(index, "description", e.target.value)
                     }}
-                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20"
+                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white placeholder-white/70"
                   />
                 </motion.div>
                 <motion.div
@@ -258,7 +250,7 @@ export const Assets = () => {
                     onChange={(e) => {
                       updateAsset(index, "location", e.target.value)
                     }}
-                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20"
+                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white placeholder-white/70"
                   />
                 </motion.div>
                 <motion.div
@@ -278,7 +270,7 @@ export const Assets = () => {
                     onChange={(e) => {
                       updateAsset(index, "value", e.target.value ? parseFloat(e.target.value) : 0)
                     }}
-                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20"
+                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white placeholder-white/70"
                   />
                 </motion.div>
               </div>
@@ -306,7 +298,7 @@ export const Assets = () => {
                 ) : (
                   <div className="space-y-3">
                     {asset.beneficiaries.map((beneficiary, beneficiaryIndex) => (
-                      <div key={beneficiaryIndex} className="grid grid-cols-3 gap-3 p-3 bg-white/50 rounded-lg">
+                      <div key={beneficiaryIndex} className="grid grid-cols-3 gap-3 p-3 bg-zinc-900/50 rounded-lg border border-white/20">
                         <div className="space-y-1">
                           <Label className="text-xs">Name</Label>
                           <Input
@@ -315,7 +307,8 @@ export const Assets = () => {
                             onChange={(e) =>
                               updateBeneficiary(index, beneficiaryIndex, "name", e.target.value)
                             }
-                            className="h-8 text-sm !bg-white"
+                            className="h-8 text-sm transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white placeholder-white/70"
+
                           />
                         </div>
                         <div className="space-y-1">
@@ -326,7 +319,8 @@ export const Assets = () => {
                             onChange={(e) =>
                               updateBeneficiary(index, beneficiaryIndex, "relationship", e.target.value)
                             }
-                            className="h-8 text-sm !bg-white"
+                            className="h-8 text-sm transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white placeholder-white/70"
+
                           />
                         </div>
                         <div className="space-y-1">
@@ -338,13 +332,14 @@ export const Assets = () => {
                               onChange={(e) =>
                                 updateBeneficiary(index, beneficiaryIndex, "share", e.target.value)
                               }
-                              className="h-8 text-sm !bg-white"
+                              className="h-8 text-sm transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white placeholder-white/70"
+
                             />
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => removeBeneficiary(index, beneficiaryIndex)}
-                              className="h-8 w-8 p-0 hover:bg-red-50 hover:text-red-600"
+                              className="h-8 w-8 p-0 hover:bg-red-50 hover:text-red-600 text-red-500"
                             >
                               <Trash2 className="w-3 h-3" />
                             </Button>
@@ -359,7 +354,7 @@ export const Assets = () => {
                               onChange={(e) =>
                                 updateBeneficiary(index, beneficiaryIndex, "walletAddress", e.target.value)
                               }
-                              className="h-8 text-sm !bg-white"
+                              className="h-8 text-sm transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 text-white placeholder-white/70"
                             />
                           </div>
                         </div>
@@ -374,7 +369,7 @@ export const Assets = () => {
                   variant="outline"
                   size="sm"
                   onClick={() => removeAsset(index)}
-                  className="text-red-600 hover:text-red-700"
+                  className="text-red-500 hover:text-red-600"
                 >
                   <Trash2 className="w-4 h-4 mr-1" />
                   Remove Asset
@@ -385,14 +380,15 @@ export const Assets = () => {
         ))}
 
         <motion.div
-          className="mt-4 text-black"
+          className="mt-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2 }}
         >
-          <Button variant="outline" className="w-full "
+          <Button variant="outline" className="w-full !bg-white/5  border-none text-white hover:bg-white/10"
             onClick={addAssetBar}
           >
+            <PlusIcon />
             Add Another Asset
           </Button>
         </motion.div>

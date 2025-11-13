@@ -58,6 +58,21 @@ export default function Hero() {
     return (
         <>
             <section className="relative overflow-hidden min-h-screen flex flex-col">
+                {/* Background logo on extreme left */}
+                <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, delay: 0.1 }}
+                    className="absolute top-0 left-0 w-1/2 h-full pointer-events-none"
+                    style={{
+                        backgroundImage: 'url(/legacy.png)',
+                        backgroundSize: 'contain',
+                        backgroundPosition: 'left center',
+                        backgroundRepeat: 'no-repeat',
+                        opacity: 1,
+                    }}
+                />
+
                 <div className="container mx-auto px-4 py-24 sm:py-32 relative z-10 flex-1 flex flex-col">
                     <div className="mx-auto max-w-4xl text-center flex-1 flex flex-col justify-center">
                         {/* Main Heading */}
@@ -149,6 +164,7 @@ export default function Hero() {
                                             <path d="m12 5 7 7-7 7"></path>
                                         </svg>
                                     </div>
+
                                 </div>
                             </div>
                         </motion.div>

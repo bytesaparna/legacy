@@ -11,7 +11,7 @@ export const ProgressBar = () => {
 
     return (
         <motion.div
-            className="mb-8  mt-10"
+            className="mb-8 mt-10 max-w-5xl mx-auto"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -23,7 +23,7 @@ export const ProgressBar = () => {
                 transition={{ duration: 0.6 }}
             >
                 <h1 className="text-3xl font-bold text-primary">Legacy Builder</h1>
-                <Badge className="bg-yellow-100 text-primary">
+                <Badge className="bg-transparent text-muted-foreground text-sm">
                     Step {step} of {maximumStep}
                 </Badge>
             </motion.div>
@@ -44,7 +44,7 @@ export const ProgressBar = () => {
 
             {/* Step Navigation */}
             <motion.div
-                className="flex flex-wrap gap-2 mb-8"
+                className="flex justify-center flex-wrap gap-2 mb-8"
                 initial="hidden"
                 animate="visible"
                 variants={{

@@ -20,7 +20,7 @@ export const PersonalInfo = () => {
       exit={{ opacity: 0, x: -20 }}
       className="space-y-6"
     >
-      <div className="text-center mb-8 text-black">
+      <div className="text-center mb-8 text-white font-serif">
         <motion.h3
           className="text-2xl font-bold mb-2"
           initial={{ opacity: 0, y: 20 }}
@@ -30,7 +30,7 @@ export const PersonalInfo = () => {
           Lets Start with Your Personal Information
         </motion.h3>
         <motion.p
-          className="text-slate-600"
+          className="text-slate-200"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
@@ -39,7 +39,7 @@ export const PersonalInfo = () => {
         </motion.p>
       </div>
 
-      <Card className="p-6 bg-primary/20 text-black bg-gradient-to-br from-primary/20 to-primary/60">
+      <Card className="p-6 bg-zinc-900/50 text-primary shadow-[0_0_10px_oklch(0.6716_0.1368_48.513/0.2)]">
         <motion.div
           className="grid md:grid-cols-2 gap-6"
           initial="hidden"
@@ -58,7 +58,7 @@ export const PersonalInfo = () => {
           {personalData.map((field) => (
             <motion.div
               key={field.id}
-              className={`space-y-4 text-black ${field.colSpan ? "md:col-span-2" : ""}`}
+              className={`space-y-4  ${field.colSpan ? "md:col-span-2" : ""}`}
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0 },
@@ -81,7 +81,7 @@ export const PersonalInfo = () => {
                     })
                   }
                   required
-                  className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20"
+                  className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xlborder border-none shadow-lg shadow-black/20 rounded-xl text-white placeholder-white/70 p-3"
                 />
               ) : field.type === "select" ? (
                 <Select
@@ -96,7 +96,9 @@ export const PersonalInfo = () => {
                   }
                   required
                 >
-                  <SelectTrigger className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20">
+                  <SelectTrigger
+                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xlborder border-none shadow-lg shadow-black/20 rounded-xl text-white placeholder-white/70 p-3"
+                  >
                     <SelectValue placeholder="Select marital status" />
                   </SelectTrigger>
                   <SelectContent>
@@ -130,7 +132,7 @@ export const PersonalInfo = () => {
                     })
                   }}
                   required={field.id !== "occupation"}
-                  className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg !bg-primary/20"
+                  className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5  backdrop-blur-xl border border-white/20shadow-lg shadow-black/20 rounded-xl  text-white placeholder-white/70 p-3"
                 />
               )}
             </motion.div>

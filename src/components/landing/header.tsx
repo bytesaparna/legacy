@@ -43,7 +43,7 @@ export const Header = ({ isScrolled, isMobileMenuOpen, setIsMobileMenuOpen }: He
     return (
         <>
             <header
-                className={`sticky top-4 z-[9999] mx-auto hidden w-full flex-row items-center justify-between self-start rounded-full bg-background/80 md:flex backdrop-blur-sm border border-border/50 shadow-lg transition-all duration-300 ${isScrolled ? "max-w-4xl px-3" : "max-w-5xl px-4"
+                className={`sticky top-4 z-[9999] mx-auto hidden w-full flex-row items-center justify-between self-start rounded-full bg-background/80 md:flex backdrop-blur-sm border border-border/50 shadow-lg transition-all duration-300 ${isScrolled ? "max-w-5xl px-3" : "max-w-6xl px-4"
                     } py-2`}
                 style={{
                     willChange: "transform",
@@ -170,8 +170,7 @@ export const Header = ({ isScrolled, isMobileMenuOpen, setIsMobileMenuOpen }: He
             <header className="sticky top-4 z-[9999] mx-4 flex w-auto flex-row items-center justify-between rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg md:hidden px-4 py-3">
                 <a
                     className="flex items-center justify-center gap-2"
-                    href="https://v0.app"
-                    target="_blank"
+                    href="/"
                     rel="noopener noreferrer"
                 >
                     <svg

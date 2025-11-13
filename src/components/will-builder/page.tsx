@@ -38,7 +38,12 @@ export const WillBuilderPage = () => {
 
                 {/* Main Content */}
                 <motion.div layout className="max-w-4xl mx-auto">
-                    <Card className="overflow-hidden shadow-xl border border-border/50 backdrop-blur-sm bg-slate-200">
+                    {/* Background gradient */}
+                    {/* <div className="absolute bg-gradient-to-br from-zinc-900 via-black to-zinc-900" /> */}
+                    {/* Decorative elements */}
+                    <div className="absolute top-20 right-20 w-72 h-72 bg-[#e78a53]/10 rounded-full blur-3xl" />
+                    <div className="absolute bottom-20 left-20 w-96 h-96 bg-[#e78a53]/5 rounded-full blur-3xl" />
+                    <Card className="overflow-hidden shadow-xl border border-primary/30  bg-zinc-900/50 backdrop-blur-xl ">
                         <CardContent className="p-8">
                             <AnimatePresence mode="wait">{renderStepContent(step)}</AnimatePresence>
                         </CardContent>
@@ -73,9 +78,11 @@ export const WillBuilderPage = () => {
                         style={{ backgroundColor: "#e78a53", color: "#121113" }}
                     >
                         Next
-                        <motion.div animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}>
-                            <ArrowRight className="w-4 h-4" />
-                        </motion.div>
+                        {step === maximumStep ? <ArrowRight className="w-4 h-4" /> : (
+                            <motion.div animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}>
+                                <ArrowRight className="w-4 h-4" />
+                            </motion.div>)
+                        }
                     </MagneticButton>
                 </motion.div>
             </div>
