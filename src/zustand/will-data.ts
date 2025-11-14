@@ -65,6 +65,7 @@ export const WillDataSchema = z.object({
         })
     ),
     specialInstructions: z.string().optional(),
+    isMintedOnChain: z.boolean().optional(),
 })
 
 export type WillData = z.infer<typeof WillDataSchema>
@@ -106,6 +107,7 @@ export const useWillDataStore = create<WillDataStore>((set) => ({
             relationship: "",
         }],
         specialInstructions: "",
+        isMintedOnChain: false,
     },
     updateWillData: (data) =>
         set((state) => ({
@@ -129,6 +131,7 @@ export const useWillDataStore = create<WillDataStore>((set) => ({
                 executor: { name: "", relationship: "", address: "" },
                 guardians: [],
                 specialInstructions: "",
+                isMintedOnChain: false,
             },
             step: 1
         }),

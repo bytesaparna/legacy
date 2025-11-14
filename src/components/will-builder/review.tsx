@@ -28,19 +28,17 @@ export const Review = () => {
         onSuccess: (data) => {
             toast.success("Will saved successfully!", {
                 style: {
-                    background: "linear-gradient(135deg, #fb923c 0%, #f97316 100%)",
-                    color: "#fff",
+                    background: "oklch(0.6716 0.1368 48.513)",
+                    color: "oklch(0.1797 0.0043 308.1928)",
                     borderRadius: "0.75rem",
                     padding: "1rem",
                     fontSize: "0.875rem",
                     fontWeight: "600",
-                    border: "1px solid #fdba74",
-                    boxShadow: "0 10px 40px rgba(251, 146, 60, 0.3)",
+                    border: "1px solid oklch(0.6716 0.1368 48.513)",
                 },
                 duration: 5000,
                 position: "top-right",
                 icon: <CheckCircle className="w-5 h-5" />,
-                className: "bg-gradient-to-r from-orange-400 to-orange-600 text-white",
                 description: "Your will has been saved to the database",
                 action: {
                     label: "View Will",
@@ -55,14 +53,19 @@ export const Review = () => {
         onError: (error) => {
             toast.error(`Failed to save will: ${error.message}`, {
                 style: {
-                    background: "#000",
-                    color: "#fff",
-                    borderRadius: "0.5rem",
-                    padding: "0.5rem",
+                    background: "oklch(0.1797 0.0043 308.1928)",
+                    color: "#ef4444",
+                    borderRadius: "0.75rem",
+                    padding: "1rem",
                     fontSize: "0.875rem",
-                    fontWeight: "bold",
-                }
+                    fontWeight: "600",
+                    border: "1px solid #ef4444",
+                },
+                duration: 7000,
+                position: "top-right",
+                icon: <AlertCircle className="w-5 h-5" />,
             })
+
         }
     })
 
@@ -70,12 +73,13 @@ export const Review = () => {
         if (!address) {
             toast.error("Please connect your wallet first", {
                 style: {
-                    background: "#000",
-                    color: "#fff",
-                    borderRadius: "0.5rem",
-                    padding: "0.5rem",
+                    background: "oklch(0.1797 0.0043 308.1928)",
+                    color: "#ef4444",
+                    borderRadius: "0.75rem",
+                    padding: "1rem",
                     fontSize: "0.875rem",
-                    fontWeight: "bold",
+                    fontWeight: "600",
+                    border: "1px solid #ef4444",
                 },
                 duration: 5000,
                 position: "top-right",
@@ -89,12 +93,13 @@ export const Review = () => {
         if (!walletClient) {
             toast.error("Wallet client not ready", {
                 style: {
-                    background: "#000",
-                    color: "#fff",
-                    borderRadius: "0.5rem",
-                    padding: "0.5rem",
+                    background: "oklch(0.1797 0.0043 308.1928)",
+                    color: "#ef4444",
+                    borderRadius: "0.75rem",
+                    padding: "1rem",
                     fontSize: "0.875rem",
-                    fontWeight: "bold",
+                    fontWeight: "600",
+                    border: "1px solid #ef4444",
                 },
                 duration: 5000,
                 position: "top-right",
@@ -107,7 +112,7 @@ export const Review = () => {
 
         try {
             await createWillMutation.mutateAsync({
-                userId: userData?.id || address, // Use user ID if available, otherwise wallet address (will auto-create user)
+                userId: userData!.id,
                 personalInfo: {
                     fullName: willData.personalInfo.fullName,
                     dateOfBirth: willData.personalInfo.dateOfBirth,
@@ -158,52 +163,21 @@ export const Review = () => {
                     relationship: guardian.relationship,
                 })),
                 specialInstructions: willData.specialInstructions,
-                status: "completed"
             })
             setWillGenerated(true)
-            // toast.info("Publishing will to Somnia blockchain...", {
-            //     style: {
-            //         background: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)",
-            //         color: "#fff",
-            //         borderRadius: "0.75rem",
-            //         padding: "1rem",
-            //         fontSize: "0.875rem",
-            //         fontWeight: "600",
-            //     },
-            //     duration: 3000,
-            //     position: "top-right",
-            // })
-
-            // const { tx, willId, data, encodedWillData } = await publishWill(walletClient, willData)
-
-            // console.log("Will published:", { tx, willId, data, encodedWillData })
-
-            // toast.success("Will published to blockchain!", {
-            //     style: {
-            //         background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
-            //         color: "#fff",
-            //         borderRadius: "0.75rem",
-            //         padding: "1rem",
-            //         fontSize: "0.875rem",
-            //         fontWeight: "600",
-            //     },
-            //     duration: 5000,
-            //     position: "top-right",
-            //     icon: <CheckCircle className="w-5 h-5" />,
-            //     description: `Transaction: ${tx}`,
-            // })
 
         } catch (error) {
             console.error("Error in handleGenerateWill:", error)
             const errorMessage = error instanceof Error ? error.message : "Unknown error occurred"
             toast.error(`Failed to publish will: ${errorMessage}`, {
                 style: {
-                    background: "#000",
-                    color: "#fff",
-                    borderRadius: "0.5rem",
-                    padding: "0.5rem",
+                    background: "oklch(0.1797 0.0043 308.1928)",
+                    color: "#ef4444",
+                    borderRadius: "0.75rem",
+                    padding: "1rem",
                     fontSize: "0.875rem",
-                    fontWeight: "bold",
+                    fontWeight: "600",
+                    border: "1px solid #ef4444",
                 },
                 duration: 7000,
                 position: "top-right",
@@ -211,6 +185,60 @@ export const Review = () => {
             })
         }
     }
+
+    const handleGenerateWillOnchain = async () => {
+        try {
+            toast.info("Publishing will to Somnia blockchain...", {
+                style: {
+                    background: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)",
+                    color: "#fff",
+                    borderRadius: "0.75rem",
+                    padding: "1rem",
+                    fontSize: "0.875rem",
+                    fontWeight: "600",
+                },
+                duration: 3000,
+                position: "top-right",
+            })
+
+            const { tx, willId, data, encodedWillData } = await publishWill(walletClient, { ...willData, isMintedOnChain: true })
+            console.log("Will published:", { tx, willId, data, encodedWillData })
+
+            toast.success("Will published to blockchain!", {
+                style: {
+                    background: "oklch(0.6716 0.1368 48.513)",
+                    color: "oklch(0.1797 0.0043 308.1928)",
+                    borderRadius: "0.75rem",
+                    padding: "1rem",
+                    fontSize: "0.875rem",
+                    fontWeight: "600",
+                    border: "1px solid oklch(0.6716 0.1368 48.513)",
+                },
+                duration: 5000,
+                position: "top-right",
+                icon: <CheckCircle className="w-5 h-5" />,
+                description: `Transaction: ${tx}`,
+            })
+        } catch (error) {
+            console.error("Error in handleGenerateWillOnchain:", error)
+            const errorMessage = error instanceof Error ? error.message : "Unknown error occurred"
+            toast.error(`Failed to publish will: ${errorMessage}`, {
+                style: {
+                    background: "oklch(0.1797 0.0043 308.1928)",
+                    color: "#ef4444",
+                    borderRadius: "0.75rem",
+                    padding: "1rem",
+                    fontSize: "0.875rem",
+                    fontWeight: "600",
+                    border: "1px solid #ef4444",
+                },
+                duration: 7000,
+                position: "top-right",
+                icon: <AlertCircle className="w-4 h-4" />,
+            })
+        }
+    }
+
 
     return (
         <motion.div
@@ -306,7 +334,7 @@ export const Review = () => {
                 <Button
                     variant="outline"
                     className="flex-1 !bg-primary text-black hover:text-black hover:to-black/20"
-                    onClick={handleGenerateWill}
+                    onClick={handleGenerateWillOnchain}
                     disabled={createWillMutation.isPending || !willGenerated}
                 >
                     {createWillMutation.isPending ? (
