@@ -315,7 +315,7 @@ export const Review = () => {
                 transition={{ duration: 0.6, delay: 0.8 }}
             >
                 <Button
-                    className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
+                    className="flex-1 bg-linear-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
                     onClick={handleGenerateWill}
                     disabled={createWillMutation.isPending || willGenerated}
                 >
@@ -333,7 +333,7 @@ export const Review = () => {
                 </Button>
                 <Button
                     variant="outline"
-                    className="flex-1 !bg-primary text-black hover:text-black hover:to-black/20"
+                    className="flex-1 bg-linear-to-r from-primary to-primary/80 text-black hover:text-black hover:to-black/20"
                     onClick={handleGenerateWillOnchain}
                     disabled={createWillMutation.isPending || !willGenerated}
                 >
