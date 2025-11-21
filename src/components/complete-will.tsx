@@ -49,15 +49,13 @@ interface LastWillProps {
       walletAddress: string,
     }[],
   }[],
-  executor: { name: string, relationship: string, address: string },
-  guardians: {
-    name: string,
-    relationship: string,
-  }[],
   specialInstructions: string,
   location?: string
   backgroundColor?: string
   stampColor?: string
+  transactionHash?: string
+  willId?: string
+  createdAt?: Date
 }
 
 
@@ -67,7 +65,7 @@ export default function LastWillDialog(props: LastWillProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       {/* Modal Content */}
-      <DialogContent className="h-[90vh] max-h-[90vh] overflow-y-auto !bg-black w-full !max-w-5xl px-4 mt-20">
+      <DialogContent className="h-[90vh] max-h-[90vh] overflow-y-auto bg-black w-full max-w-3xl! px-4 mt-20">
         <DialogHeader className="hidden">
           <DialogTitle>Last Will and Testament</DialogTitle>
         </DialogHeader>
@@ -83,11 +81,11 @@ export default function LastWillDialog(props: LastWillProps) {
 function LastWillAndTestament({
   personalInfo,
   assets,
-  executor,
-  guardians,
   specialInstructions,
   onChainAssets,
-  stampColor = "#DC143C"
+  stampColor = "#DC143C",
+  transactionHash,
+  createdAt
 }: LastWillProps) {
   return (
     <div className="min-h-full">
@@ -95,7 +93,7 @@ function LastWillAndTestament({
       <div
         className="min-h-full"
         style={{
-          backgroundImage: 'url(/legacy-bg.png)',
+          backgroundImage: 'url(/bg-image.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           // backgroundAttachment: 'local',
@@ -104,7 +102,7 @@ function LastWillAndTestament({
       >
         {/* Document Content */}
         <div className="w-full">
-          <div className="text-black px-8 py-72" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>
+          <div className="text-black px-8 py-48" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>
             {/* Title */}
             <div className="text-center">
               <h1 className="text-4xl font-serif md:text-5xl font-bold tracking-wide mb-8" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.15)' }}>Last Will and Testament</h1>
@@ -113,14 +111,14 @@ function LastWillAndTestament({
             {/* Testator Info */}
             <div className="mb-8 text-center max-w-3xl mx-auto">
               <p className="text-lg mb-2">
-                <span className="font-semibold">I, {personalInfo.fullName}</span>, being of sound mind and memory, do hereby
+                <span className="font-semibold">I, {personalInfo.fullName}</span>, born on {personalInfo.dateOfBirth}, being of sound mind and memory, do hereby
                 make, publish, and declare this to be my Last Will and Testament.
               </p>
             </div>
 
             {/* Date and Location */}
             <div className="mb-10 max-w-4xl mx-auto text-center">
-              <p><span className="font-semibold">Date:</span> {personalInfo.dateOfBirth}</p>
+              <p><span className="font-semibold">Date:</span> {createdAt ? new Date(createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
               <p><span className="font-semibold">Location:</span> {personalInfo.address}</p>
             </div>
 
@@ -140,7 +138,7 @@ function LastWillAndTestament({
                         <div className="ml-4 mt-2">
                           <p className="text-sm font-semibold">Beneficiaries:</p>
                           {asset.beneficiaries.map((b, bIdx) => (
-                            <p key={bIdx} className="text-xs ml-4">• {b.name} ({b.relationship}) - Share: {b.share}</p>
+                            <p key={bIdx} className="text-xs ml-4">• {b.name} ({b.relationship}) - Share: {b.share}%</p>
                           ))}
                         </div>
                       )}
@@ -166,7 +164,10 @@ function LastWillAndTestament({
                         <div className="ml-4 mt-2">
                           <p className="text-sm font-semibold">Beneficiaries:</p>
                           {asset.beneficiaries.map((b, bIdx) => (
-                            <p key={bIdx} className="text-xs ml-4">• {b.name} ({b.relationship}) - {b.share} - Wallet: {b.walletAddress}</p>
+                            <div>
+                              <p key={bIdx} className="text-xs font-semibold ml-4">• {b.name} ({b.relationship}) - {b.share}%</p>
+                              <p className="text-xs ml-6">Wallet Address - {b.walletAddress}</p>
+                            </div>
                           ))}
                         </div>
                       )}
@@ -176,34 +177,12 @@ function LastWillAndTestament({
               </div>
             )}
 
-            {/* Executor */}
-            {executor && executor.name && executor.relationship && executor.address && (
-              <div className="mb-10 max-w-2xl mx-auto">
-                <h2 className="text-2xl font-bold mb-4 pb-2 text-center">Executor</h2>
-                <p className="ml-4 font-semibold">{executor.name}</p>
-                <p className="text-sm ml-8"><strong>Relationship:</strong> {executor.relationship}</p>
-              </div>)}
-
-            {/* Guardians */}
-            {guardians && guardians.length > 0 && guardians.every(guardian => guardian.name && guardian.relationship) && (
-              <div className="mb-10 max-w-2xl mx-auto">
-                <h2 className="text-2xl font-bold mb-4 pb-2 text-center">Guardians</h2>
-                <div className="space-y-4">
-                  {guardians.map((guardian, i) => (
-                    <div key={i} className="ml-4 pb-3">
-                      <p className="font-semibold">{i + 1}. {guardian.name}</p>
-                      <p className="text-sm ml-4"><strong>Relationship:</strong> {guardian.relationship}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* Special Instructions */}
-            {specialInstructions && specialInstructions.length > 0 && (
+            {specialInstructions !== "" && (
               <div className="mb-10 max-w-2xl mx-auto">
                 <h2 className="text-2xl font-bold mb-4 pb-2 text-center">Special Instructions</h2>
-                <p className="ml-4 font-semibold">{specialInstructions}</p>
+                <p className="text-center">{specialInstructions}</p>
               </div>
             )}
 
@@ -218,6 +197,20 @@ function LastWillAndTestament({
                 </div>
               </div>
             </div>
+
+            {/* Blockchain Verification */}
+            {transactionHash && (
+              <div className="mt-12 pt-6 max-w-2xl mx-auto border-t-2 border-gray-300">
+                <h3 className="text-lg font-bold mb-3 text-center text-black">Blockchain Verification</h3>
+                <div className="bg-black/5 p-4 rounded-lg">
+                  <p className="text-xs font-semibold mb-1 text-black">Transaction Hash:</p>
+                  <p className="text-xs font-mono break-all text-black">{transactionHash}</p>
+                  <p className="text-xs text-black/70 mt-3 italic">
+                    This will has been permanently recorded on the Somnia blockchain.
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* Seal */}
             <div className="relative bottom-24 left-1/2 md:bottom-44 md:left-1/2">

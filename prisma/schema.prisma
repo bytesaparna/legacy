@@ -34,23 +34,19 @@ model Will {
   maritalStatus String
   occupation    String?
 
-  // Executor Information
-  executorName         String
-  executorRelationship String
-  executorAddress      String
 
   // Special Instructions
   specialInstructions String?
 
   // Status and metadata
-  status    String   @default("draft") // draft, completed, published
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  status          String   @default("draft") // draft, completed, published
+  transactionHash String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   // Relations
   assets         Asset[]
   onChainAssets  OnChainAsset[]
-  guardians      Guardian[]
 
   @@index([userId])
   @@index([status])
@@ -133,18 +129,4 @@ model OnChainBeneficiary {
   updatedAt DateTime @updatedAt
 
   @@index([onChainAssetId])
-}
-
-model Guardian {
-  id     String @id @default(cuid())
-  willId String
-  will   Will   @relation(fields: [willId], references: [id], onDelete: Cascade)
-
-  name         String
-  relationship String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([willId])
 }

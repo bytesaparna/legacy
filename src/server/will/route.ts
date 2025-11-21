@@ -46,15 +46,6 @@ export const willRouter = router({
                     walletAddress: z.string(),
                 }))
             })),
-            executor: z.object({
-                name: z.string(),
-                relationship: z.string(),
-                address: z.string(),
-            }),
-            guardians: z.array(z.object({
-                name: z.string(),
-                relationship: z.string(),
-            })),
             specialInstructions: z.string().optional(),
             status: z.string().optional().default("draft"),
         }))
@@ -93,10 +84,6 @@ export const willRouter = router({
                     address: input.personalInfo.address,
                     maritalStatus: input.personalInfo.maritalStatus,
                     occupation: input.personalInfo.occupation,
-                    // Executor Information
-                    executorName: input.executor.name,
-                    executorRelationship: input.executor.relationship,
-                    executorAddress: input.executor.address,
                     // Special Instructions
                     specialInstructions: input.specialInstructions,
                     // Status
@@ -144,18 +131,11 @@ export const willRouter = router({
                             }
                         }))
                     },
-                    // Create guardians
-                    guardians: {
-                        create: input.guardians.map(guardian => ({
-                            name: guardian.name,
-                            relationship: guardian.relationship,
-                        }))
-                    }
                 },
                 include: {
                     assets: {
                         include: {
-                            beneficiaries: true
+                            beneficiaries: true,
                         }
                     },
                     onChainAssets: {
@@ -163,7 +143,6 @@ export const willRouter = router({
                             beneficiaries: true
                         }
                     },
-                    guardians: true
                 }
             });
 
@@ -190,7 +169,6 @@ export const willRouter = router({
                             beneficiaries: true
                         }
                     },
-                    guardians: true
                 },
                 orderBy: {
                     updatedAt: 'desc'
@@ -220,7 +198,38 @@ export const willRouter = router({
                             beneficiaries: true
                         }
                     },
-                    guardians: true
+                }
+            });
+
+            return will;
+        }),
+
+    updateWill: publicProcedure
+        .input(z.object({
+            willId: z.string(),
+            status: z.string().optional(),
+            transactionHash: z.string().optional(),
+        }))
+        .mutation(async ({ input }) => {
+            const will = await prisma.will.update({
+                where: {
+                    id: input.willId
+                },
+                data: {
+                    ...(input.status && { status: input.status }),
+                    ...(input.transactionHash && { transactionHash: input.transactionHash }),
+                },
+                include: {
+                    assets: {
+                        include: {
+                            beneficiaries: true,
+                        }
+                    },
+                    onChainAssets: {
+                        include: {
+                            beneficiaries: true
+                        }
+                    },
                 }
             });
 

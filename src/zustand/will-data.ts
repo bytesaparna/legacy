@@ -53,19 +53,10 @@ export const WillDataSchema = z.object({
             ),
         })
     ),
-    executor: z.object({
-        name: z.string(),
-        relationship: z.string(),
-        address: z.string(),
-    }),
-    guardians: z.array(
-        z.object({
-            name: z.string(),
-            relationship: z.string(),
-        })
-    ),
     specialInstructions: z.string().optional(),
-    isMintedOnChain: z.boolean().optional(),
+    status: z.string().optional(),
+    transactionHash: z.string().optional(),
+    createdAt: z.date().optional(),
 })
 
 export type WillData = z.infer<typeof WillDataSchema>
@@ -101,13 +92,10 @@ export const useWillDataStore = create<WillDataStore>((set) => ({
             beneficiaries: [],
         }],
         onChainAssets: [],
-        executor: { name: "", relationship: "", address: "" },
-        guardians: [{
-            name: "",
-            relationship: "",
-        }],
         specialInstructions: "",
-        isMintedOnChain: false,
+        status: "draft",
+        transactionHash: undefined,
+        createdAt: undefined,
     },
     updateWillData: (data) =>
         set((state) => ({
@@ -128,10 +116,11 @@ export const useWillDataStore = create<WillDataStore>((set) => ({
                 },
                 assets: [],
                 onChainAssets: [],
-                executor: { name: "", relationship: "", address: "" },
-                guardians: [],
                 specialInstructions: "",
-                isMintedOnChain: false,
+                status: "draft",
+                transactionHash: undefined,
+                createdAt: undefined,
+
             },
             step: 1
         }),

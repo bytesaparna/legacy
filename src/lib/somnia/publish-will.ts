@@ -29,7 +29,6 @@ export async function publishWill(walletClient: WalletClient | undefined, willDa
         { name: "fullName", value: willData.personalInfo.fullName, type: "string" },
         { name: "dateOfBirth", value: willData.personalInfo.dateOfBirth, type: "string" },
         { name: "maritalStatus", value: willData.personalInfo.maritalStatus, type: "string" },
-        { name: "executor", value: willData.executor.name, type: "string" },
         { name: "encodedData", value: encodedWillData, type: "string" },
         { name: "timestamp", value: BigInt(Math.floor(Date.now() / 1000)), type: "uint256" },
     ]);

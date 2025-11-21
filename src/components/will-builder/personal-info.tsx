@@ -81,7 +81,7 @@ export const PersonalInfo = () => {
                     })
                   }
                   required
-                  className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xlborder border-none shadow-lg shadow-black/20 rounded-xl text-white placeholder-white/70 p-3"
+                  className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-linear-to-br from-white/10 to-white/5 backdrop-blur-xlborder border-none shadow-lg shadow-black/20 rounded-xl text-white placeholder-white/70 p-3"
                 />
               ) : field.type === "select" ? (
                 <Select
@@ -97,7 +97,7 @@ export const PersonalInfo = () => {
                   required
                 >
                   <SelectTrigger
-                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xlborder border-none shadow-lg shadow-black/20 rounded-xl text-white placeholder-white/70 p-3"
+                    className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-linear-to-br from-white/10 to-white/5 backdrop-blur-xlborder border-none shadow-lg shadow-black/20 rounded-xl text-white placeholder-white/70 p-3"
                   >
                     <SelectValue placeholder="Select marital status" />
                   </SelectTrigger>
@@ -132,7 +132,7 @@ export const PersonalInfo = () => {
                     })
                   }}
                   required={field.id !== "occupation"}
-                  className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-gradient-to-br from-white/10 to-white/5  backdrop-blur-xl border border-white/20shadow-lg shadow-black/20 rounded-xl  text-white placeholder-white/70 p-3"
+                  className="transition-all duration-300 focus:scale-[1.02] focus:shadow-lg bg-linear-to-br from-white/10 to-white/5  backdrop-blur-xl border border-white/20shadow-lg shadow-black/20 rounded-xl  text-white placeholder-white/70 p-3"
                 />
               )}
             </motion.div>

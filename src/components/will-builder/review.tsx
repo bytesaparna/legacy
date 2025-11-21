@@ -5,27 +5,46 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useWillDataStore } from "@/zustand/will-data"
 import { motion } from "framer-motion"
-import { AlertCircle, CheckCircle, FileText, Loader2 } from "lucide-react"
+import { AlertCircle, CheckCircle, FileText, Loader2, View } from "lucide-react"
 import { useState } from "react"
 import { api } from "@/trpc/trpc"
 import { useAccount, useWalletClient } from "wagmi"
 import { toast } from "sonner"
 import { publishWill } from "@/lib/somnia/publish-will"
+import Link from "next/link"
 
 export const Review = () => {
-    const { willData } = useWillDataStore()
+    const { willData, updateWillData } = useWillDataStore()
     const [openWillDocument, setOpenWillDocument] = useState(false)
     const { address } = useAccount()
     const { data: walletClient } = useWalletClient()
     const [willGenerated, setWillGenerated] = useState(false)
+    const [publishingWillOnchain, setPublishingWillOnchain] = useState(false)
+    const [willCreatedAt, setWillCreatedAt] = useState<Date | undefined>(undefined)
+    const [databaseWillId, setDatabaseWillId] = useState<string | undefined>(undefined)
 
     const { data: userData } = api.user.getUser.useQuery(
         { walletAddress: address || "" },
         { enabled: !!address }
     )
 
+    const utils = api.useUtils()
+    const updateWillMutation = api.will.updateWill.useMutation({
+        onSuccess: (data) => {
+            // Invalidate and refetch the wills query after successful update
+            console.log("Will updated successfully")
+        }
+    })
+
     const createWillMutation = api.will.createWill.useMutation({
         onSuccess: (data) => {
+            // Store the createdAt and database will ID from the database response
+            if (data.createdAt) {
+                setWillCreatedAt(data.createdAt)
+            }
+            if (data.id) {
+                setDatabaseWillId(data.id)
+            }
             toast.success("Will saved successfully!", {
                 style: {
                     background: "oklch(0.6716 0.1368 48.513)",
@@ -39,7 +58,7 @@ export const Review = () => {
                 duration: 5000,
                 position: "top-right",
                 icon: <CheckCircle className="w-5 h-5" />,
-                description: "Your will has been saved to the database",
+                description: "Your will has been saved and is ready to be minted on the blockchain",
                 action: {
                     label: "View Will",
                     onClick: () => {
@@ -153,16 +172,8 @@ export const Review = () => {
                         walletAddress: ben.walletAddress,
                     }))
                 })),
-                executor: {
-                    name: willData.executor.name,
-                    relationship: willData.executor.relationship,
-                    address: willData.executor.address,
-                },
-                guardians: willData.guardians.map(guardian => ({
-                    name: guardian.name,
-                    relationship: guardian.relationship,
-                })),
                 specialInstructions: willData.specialInstructions,
+                status: "draft",
             })
             setWillGenerated(true)
 
@@ -188,6 +199,7 @@ export const Review = () => {
 
     const handleGenerateWillOnchain = async () => {
         try {
+            setPublishingWillOnchain(true)
             toast.info("Publishing will to Somnia blockchain...", {
                 style: {
                     background: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)",
@@ -201,8 +213,23 @@ export const Review = () => {
                 position: "top-right",
             })
 
-            const { tx, willId, data, encodedWillData } = await publishWill(walletClient, { ...willData, isMintedOnChain: true })
+            const { tx, willId, data, encodedWillData } = await publishWill(walletClient, { ...willData })
             console.log("Will published:", { tx, willId, data, encodedWillData })
+
+            // Update the will in the database with transaction hash and status
+            // Use the database will ID, not the blockchain willId
+            if (databaseWillId && tx) {
+                await updateWillMutation.mutateAsync({
+                    willId: databaseWillId,
+                    status: "published",
+                    transactionHash: tx,
+                })
+                // Update the zustand store to reflect the published status
+                updateWillData({
+                    status: "published",
+                    transactionHash: tx,
+                })
+            }
 
             toast.success("Will published to blockchain!", {
                 style: {
@@ -236,6 +263,8 @@ export const Review = () => {
                 position: "top-right",
                 icon: <AlertCircle className="w-4 h-4" />,
             })
+        } finally {
+            setPublishingWillOnchain(false)
         }
     }
 
@@ -331,24 +360,39 @@ export const Review = () => {
                         </>
                     )}
                 </Button>
-                <Button
-                    variant="outline"
-                    className="flex-1 bg-linear-to-r from-primary to-primary/80 text-black hover:text-black hover:to-black/20"
-                    onClick={handleGenerateWillOnchain}
-                    disabled={createWillMutation.isPending || !willGenerated}
-                >
-                    {createWillMutation.isPending ? (
-                        <>
-                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                            Minting...
-                        </>
-                    ) : (
-                        "Mint on Blockchain"
-                    )}
-                </Button>
+                {
+                    (willData.status === "published" || willData.transactionHash) ?
+                        <Button
+                            variant="outline"
+                            className="flex-1 bg-linear-to-r from-primary to-primary/80 text-black hover:text-black hover:to-black/20"
+                        >
+                            <Link
+                                href={`https://shannon-explorer.somnia.network/tx/${willData.transactionHash}`} target="_blank" rel="noopener noreferrer">
+
+                                View On-Chain
+                            </Link>
+
+                        </Button>
+                        :
+                        <Button
+                            variant="outline"
+                            className="flex-1 bg-linear-to-r from-primary to-primary/80 text-black hover:text-black hover:to-black/20"
+                            onClick={handleGenerateWillOnchain}
+                            disabled={createWillMutation.isPending || !willGenerated}
+                        >
+                            {publishingWillOnchain ? (
+                                <>
+                                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                    Minting...
+                                </>
+                            ) : (
+                                "Mint on Blockchain"
+                            )}
+                        </Button>
+                }
             </motion.div>
 
-            {openWillDocument && <LastWillDialog personalInfo={willData.personalInfo} assets={willData.assets} onChainAssets={willData.onChainAssets} executor={willData.executor} guardians={willData.guardians} specialInstructions={willData.specialInstructions ?? ""} open={openWillDocument} setOpen={setOpenWillDocument} />}
+            {openWillDocument && <LastWillDialog personalInfo={willData.personalInfo} assets={willData.assets} onChainAssets={willData.onChainAssets} specialInstructions={willData.specialInstructions ?? ""} transactionHash={willData.transactionHash} createdAt={willCreatedAt} open={openWillDocument} setOpen={setOpenWillDocument} />}
         </motion.div>
     )
 }
