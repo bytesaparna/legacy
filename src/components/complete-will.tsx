@@ -154,7 +154,7 @@ function LastWillAndTestament({
                 <h2 className="text-2xl font-bold mb-4 pb-2 text-center">On-Chain Assets & Cryptocurrency</h2>
                 <div className="space-y-4">
                   {onChainAssets.map((asset, i) => (
-                    <div key={i} className="ml-6 pb-3">
+                    <div key={asset.id} className="ml-6 pb-3">
                       <p className="font-semibold ml-6">{i + 1}. {asset.description}</p>
                       <p className="text-sm ml-6"><strong>Type:</strong> {asset.assetType}</p>
                       <p className="text-sm ml-6"><strong>Blockchain:</strong> {asset.blockchain}</p>
@@ -164,7 +164,7 @@ function LastWillAndTestament({
                         <div className="ml-4 mt-2">
                           <p className="text-sm font-semibold">Beneficiaries:</p>
                           {asset.beneficiaries.map((b, bIdx) => (
-                            <div>
+                            <div key={b.name + b.walletAddress}>
                               <p key={bIdx} className="text-xs font-semibold ml-4">• {b.name} ({b.relationship}) - {b.share}%</p>
                               <p className="text-xs ml-6">Wallet Address - {b.walletAddress}</p>
                             </div>
