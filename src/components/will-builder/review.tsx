@@ -202,12 +202,13 @@ export const Review = () => {
             setPublishingWillOnchain(true)
             toast.info("Publishing will to Somnia blockchain...", {
                 style: {
-                    background: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)",
-                    color: "#fff",
+                    background: "oklch(0.6716 0.1368 48.513)",
+                    color: "oklch(0.1797 0.0043 308.1928)",
                     borderRadius: "0.75rem",
                     padding: "1rem",
                     fontSize: "0.875rem",
                     fontWeight: "600",
+                    border: "1px solid oklch(0.6716 0.1368 48.513)",
                 },
                 duration: 3000,
                 position: "top-right",
@@ -216,15 +217,12 @@ export const Review = () => {
             const { tx, willId, data, encodedWillData } = await publishWill(walletClient, { ...willData })
             console.log("Will published:", { tx, willId, data, encodedWillData })
 
-            // Update the will in the database with transaction hash and status
-            // Use the database will ID, not the blockchain willId
             if (databaseWillId && tx) {
                 await updateWillMutation.mutateAsync({
                     willId: databaseWillId,
                     status: "published",
                     transactionHash: tx,
                 })
-                // Update the zustand store to reflect the published status
                 updateWillData({
                     status: "published",
                     transactionHash: tx,

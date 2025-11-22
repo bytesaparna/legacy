@@ -51,7 +51,7 @@ export const ConnectWalletModal = ({ isOpen, setIsOpen }: ConnectWalletModalProp
                                 transition={{ type: "spring", damping: 20, stiffness: 300 }}
                                 className="relative z-10 w-full max-w-md"
                             >
-                                <Card className="border-0 bg-gradient-to-br from-orange-50 via-white to-orange-100 shadow-2xl rounded-2xl">
+                                <Card className="border-0 bg-linear-to-br from-orange-50 via-white to-orange-100 shadow-2xl rounded-2xl">
                                     <div className="p-8 text-center relative">
                                         {/* Close button */}
                                         <Button
